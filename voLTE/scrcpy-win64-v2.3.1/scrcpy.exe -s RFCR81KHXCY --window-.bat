@@ -1,0 +1,1 @@
+scrcpy.exe -s RFCR81KHXCY --window-title "RFCR81KHXCY (47390031243)"

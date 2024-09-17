@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTH Automation Framework</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .dropdown-menu {
+            padding: 0.5rem;
+        }
+
+        .dropdown-menu .form-check {
+            padding: 0.2rem;
+        }
+
+        .card-deck .card {
+            background-color: #0b5394;
+            min-width: 300px;
+            color: #fff;
+            border: 0;
+        }
+
+        .card-heading {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1.25rem 1.25rem 0;
+            border-left: 25px solid #e94b28;
+            background-color: #312e67;
+        }
+
+        .submit-btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: rgb(85, 20, 180);
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15%;
+            margin-top: 3%;
+        }
+
+        h3,
+        label {
+            color: #0b5394;
+        }
+
+        .img-align {
+            width: 70px;
+            height: 70px;
+        }
+
+        .btn-bt {
+            background-color: #0b5394;
+            color: #fff;
+        }
+
+        .lbl-class {
+            color: rgb(85, 20, 180);
+        }
+
+        .bottom-right {
+            float: right;
+            margin-bottom: 4%;
+        }
+
+        .pwd-by {
+            color: #312e67;
+            text-align: center;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pwd-settings {
+            float: right;
+        }
+
+        .pwd-reset {
+            display: flex;
+            gap: 11%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #loaderLogin,
+        #loaderReset {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .align-icon {
+            position: relative;
+            right: 10%;
+            margin-top: 5%;
+        }
+
+        .align-eye-icon {
+            display: flex;
+            width: 106%;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function clearToken() {
+            const url = '/remove-token';
+            const data = new FormData();
+            data.append('remove', 'true');
+
+            if (navigator.sendBeacon) {
+                console.log("Using sendBeacon to send data");
+                navigator.sendBeacon(url, data);
+            } else {
+                console.log("sendBeacon is not supported");
+            }
+        }
+    </script>
+</head>
+
+<body onload="clearToken()">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3" style="text-align: right;">
+                <img class="img-fluid img-align" alt="bt-logo" src="../static/logos/512px-BT_logo_2019.png">
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-sm-start">UTH Automation Framework</h2>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+
+        <div id="certErrorMessage" class="error-message"></div>
+        <br>
+
+        <!-- Login Form -->
+        <div id="loginForm">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                            <div class="card-body p-5">
+                                <div class="text-center">
+                                    <h3 class="mb-5">Sign in</h3>
+                                </div>
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <label class="form-label" for="emailId">Email *</label>
+                                    <input type="email" id="emailId" class="form-control form-control-lg"
+                                        placeholder="Enter email" />
+                                </div>
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <label class="form-label" for="password">Password *</label>
+                                    <div class="position-relative align-eye-icon">
+                                        <input type="password" id="password" class="form-control form-control-lg"
+                                            placeholder="Enter password" />
+                                        <i class="fa fa-eye eye-icon align-icon" id="togglePassword"></i>
+                                    </div>
+                                </div>
+                                <!-- Checkbox -->
+                                <div class="pwd-reset">
+                                    <div class="form-check d-flex justify-content-start mb-4">
+                                        <input class="form-check-input" type="checkbox" value="" id="rememberMe" />
+                                        <label class="form-check-label" for="rememberMe"> Remember password </label>
+                                    </div>
+                                    <div>
+                                        <a href="#!" id="forgotPasswordLink">Forgot password?</a>
+                                    </div>
+                                </div>
+                                <div id="loaderLogin" class="hidden">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-bt btn-lg btn-block"
+                                    id="loginBtn">
+                                    Login
+                                </button>
+                                <div id="errorMessage" class="error-message"></div>
+                                <hr class="my-4">
+                                <div class="pwd-settings">
+                                    <label>First time login?</label>
+                                    <a href="#!" id="firstTimeLoginLink">Click here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password Form (Reused for Forgot Password and First Time Login) -->
+        <div id="passwordForm" class="hidden">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                            <div class="card-body p-5">
+                                <div class="text-center">
+                                    <h3 id="passwordFormTitle" class="mb-5">Reset Password</h3>
+                                </div>
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <label class="form-label" for="forgotEmailId">Email *</label>
+                                    <input type="email" id="forgotEmailId" class="form-control form-control-lg"
+                                        placeholder="Enter email" />
+                                </div>
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <label class="form-label" for="newPassword">New Password *</label>
+                                    <div class="position-relative align-eye-icon">
+                                        <input type="password" id="newPassword" class="form-control form-control-lg"
+                                            placeholder="Enter new password" />
+                                        <i class="fa fa-eye eye-icon align-icon" id="toggleNewPassword"></i>
+                                    </div>
+                                </div>
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <label class="form-label" for="confirmPassword">Confirm Password *</label>
+                                    <div class="position-relative align-eye-icon">
+                                        <input type="password" id="confirmPassword" class="form-control form-control-lg"
+                                            placeholder="Confirm new password" />
+                                        <i class="fa fa-eye eye-icon align-icon" id="toggleConfirmPassword"></i>
+                                    </div>
+                                </div>
+                                <div id="loaderReset" class="hidden">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-bt btn-lg btn-block"
+                                    id="resetPasswordBtn">
+                                    Submit
+                                </button>
+                                <div id="passwordErrorMessage" class="error-message"></div>
+                                <hr class="my-4">
+                                <div class="text-center mt-3">
+                                    <a href="#!" id="backToLoginLink">Back to Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <footer>
+            <div class="bottom-right">
+                <p class="pwd-by">Powered by</p>
+                <a href="https://uth-uk.com" target="_blank">
+                    <img class="img-fluid" src="https://uth-uk.com/Images/img/logo.gif" />
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const rememberMe = document.getElementById('rememberMe');
+            const emailId = document.getElementById('emailId');
+            const password = document.getElementById('password');
+            const forgotEmailId = document.getElementById('forgotEmailId');
+            const newPassword = document.getElementById('newPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordErrorMessage = document.getElementById('passwordErrorMessage');
+            const loginForm = document.getElementById('loginForm');
+            const passwordForm = document.getElementById('passwordForm');
+            const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+            const backToLoginLink = document.getElementById('backToLoginLink');
+            const firstTimeLoginLink = document.getElementById('firstTimeLoginLink');
+            const passwordFormTitle = document.getElementById('passwordFormTitle');
+            const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+            const loaderLogin = document.getElementById('loaderLogin');
+            const loaderReset = document.getElementById('loaderReset');
+
+            // Check if email and password are stored in localStorage
+            if (localStorage.getItem('email') && localStorage.getItem('password')) {
+                emailId.value = localStorage.getItem('email');
+                password.value = localStorage.getItem('password');
+                rememberMe.checked = true;
+            }
+
+            document.getElementById("loginBtn").addEventListener("click", async function () {
+                const email = emailId.value;
+                const pwd = password.value;
+
+                let loginDetails = {
+                    email: email,
+                    password: pwd
+                };
+
+                if (email === "" || pwd === "") {
+                    document.getElementById('errorMessage').innerText = "All fields are mandatory!";
+                    return;
+                }
+
+                // Show loader
+                loaderLogin.classList.remove('hidden');
+
+                // call validateToken API, 
+                // validate using email 
+                // if token is valid - continue - userLogin API need not to be called
+                // else - call userLogin - result token
+                // updateToken API - pass this token
+
+                await fetch("http://localhost:3000/userLogin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(loginDetails)
+                }).then(response => {
+                    return response.json();
+                }).then(async data => {
+
+                    if (data?.Items) {
+                        localStorage.setItem('token', data.Items);
+
+                        await fetch("http://localhost:3000/save-token", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ token: data.Items })
+                        }).then(response => {
+                            return response.json();
+                        }).then(data => {
+                            console.log("data", data);
+                            sessionStorage.setItem('userEmail', email)
+                            if (rememberMe.checked) {
+                                localStorage.setItem('email', email);
+                                localStorage.setItem('password', pwd);
+                            } else {
+                                localStorage.removeItem('email');
+                                localStorage.removeItem('password');
+                            }
+                            sessionStorage.setItem("tokenSetStatus", true);
+                            window.location.href = '/dashboard';
+                        }).catch(error => {
+                            console.error("Error submitting data:", error);
+                            localStorage.removeItem('token');
+                            sessionStorage.removeItem('userEmail')
+                            document.getElementById('errorMessage').innerText = error?.message ?? 'Error logging in to the application!';
+                        }).finally(() => {
+                            // Hide loader
+                            loaderLogin.classList.add('hidden');
+                        });
+                    } else {
+                        localStorage.removeItem('token');
+                        sessionStorage.removeItem('userEmail')
+                        document.getElementById('errorMessage').innerText = data?.message ?? 'Invalid credentials';
+                    }
+                }).catch(error => {
+                    console.error("Error submitting data:", error);
+                }).finally(() => {
+                    // Hide loader
+                    loaderLogin.classList.add('hidden');
+                })
+            });
+
+            emailId.addEventListener('input', function () {
+                document.getElementById('errorMessage').innerText = '';
+                sessionStorage.removeItem('userEmail');
+                localStorage.removeItem('token');
+            });
+
+            password.addEventListener('input', function () {
+                document.getElementById('errorMessage').innerText = '';
+                sessionStorage.removeItem('userEmail');
+                localStorage.removeItem('token');
+            });
+
+            document.getElementById("togglePassword").addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            document.getElementById("toggleNewPassword").addEventListener('click', function () {
+                const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                newPassword.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            document.getElementById("toggleConfirmPassword").addEventListener('click', function () {
+                const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPassword.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            document.getElementById('resetPasswordBtn').addEventListener('click', async function () {
+                const email = forgotEmailId.value;
+                const newPwd = newPassword.value;
+                const confirmPwd = confirmPassword.value;
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
+
+                if (email === "" || newPwd === "" || confirmPwd === "") {
+                    passwordErrorMessage.innerText = 'All fields are mandatory!';
+                    passwordErrorMessage.classList.add('error-message');
+                    passwordErrorMessage.classList.remove('success-message');
+                    return;
+                }
+
+                if (newPwd !== confirmPwd) {
+                    passwordErrorMessage.innerText = 'Passwords do not match!';
+                    passwordErrorMessage.classList.add('error-message');
+                    passwordErrorMessage.classList.remove('success-message');
+                    return;
+                }
+
+                if (!passwordRegex.test(newPwd)) {
+                    passwordErrorMessage.innerText = 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character!';
+                    passwordErrorMessage.classList.add('error-message');
+                    passwordErrorMessage.classList.remove('success-message');
+                    return;
+                }
+
+                // Show loader
+                loaderReset.classList.remove('hidden');
+
+                let resetDetails = {
+                    email: email,
+                    newPassword: newPwd,
+                    confirmPassword: confirmPwd
+                };
+
+                let apiUrl = passwordFormTitle.innerText === 'Create New Password' ?
+                    "http://localhost:3000/createNewPassword" :
+                    "http://localhost:3000/forgotPassword";
+
+                await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(resetDetails)
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    console.log("data", data);
+                    if (data?.Items) {
+                        passwordErrorMessage.innerText = data?.Items ?? 'Password operation successful';
+                        passwordErrorMessage.classList.remove('error-message');
+                        passwordErrorMessage.classList.add('success-message');
+                    } else {
+                        passwordErrorMessage.innerText = data?.message ?? 'Error processing password';
+                        passwordErrorMessage.classList.add('error-message');
+                        passwordErrorMessage.classList.remove('success-message');
+                    }
+                }).catch(error => {
+                    console.error("Error processing password:", error);
+                }).finally(() => {
+                    // Hide loader
+                    loaderReset.classList.add('hidden');
+                });
+            });
+
+            forgotEmailId.addEventListener('input', function () {
+                passwordErrorMessage.innerText = '';
+            });
+
+            newPassword.addEventListener('input', function () {
+                passwordErrorMessage.innerText = '';
+            });
+
+            confirmPassword.addEventListener('input', function () {
+                passwordErrorMessage.innerText = '';
+            });
+
+            forgotPasswordLink.addEventListener('click', function () {
+                loginForm.classList.add('hidden');
+                passwordForm.classList.remove('hidden');
+                passwordFormTitle.innerText = 'Reset Password';
+            });
+
+            firstTimeLoginLink.addEventListener('click', function () {
+                loginForm.classList.add('hidden');
+                passwordForm.classList.remove('hidden');
+                passwordFormTitle.innerText = 'Create New Password';
+            });
+
+            backToLoginLink.addEventListener('click', function () {
+                passwordErrorMessage.innerText = '';
+                document.getElementById('errorMessage').innerText = '';
+                emailId.value = "";
+                password.value = "";
+                forgotEmailId.value = "";
+                newPassword.value = '';
+                confirmPassword.value = '';
+                passwordForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTH Automation Framework</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dropdown-menu {
+            padding: 0.5rem;
+        }
+
+        .dropdown-menu .form-check {
+            padding: 0.2rem;
+        }
+
+        .card-deck .card {
+            background-color: #0b5394;
+            min-width: 300px;
+            color: #fff;
+            border: 0;
+        }
+
+        .card-heading {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1.25rem 1.25rem 0;
+            border-left: 25px solid #e94b28;
+            background-color: #312e67;
+        }
+
+        .submit-btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: rgb(85, 20, 180);
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15%;
+            margin-top: 3%;
+        }
+
+        h3 {
+            color: rgb(85, 20, 180);
+            margin-bottom: 2%;
+        }
+
+        .img-align {
+            width: 70px;
+            height: 70px;
+        }
+
+        .btn-bt {
+            background-color: #0b5394;
+            color: #fff;
+        }
+
+        .lbl-class {
+            color: rgb(85, 20, 180);
+        }
+
+        .bottom-right {
+            float: right;
+            margin-bottom: 4%;
+        }
+
+        .pwd-by {
+            color: #312e67;
+            text-align: center;
+        }
+
+        .nav-bg {
+            background-color: #312e67 !important;
+        }
+
+        .nav-heading {
+            font-size: larger;
+            color: #0b5394;
+        }
+
+        .collapse-transparent {
+            background-color: rgb(202 202 213 / 50%);
+        }
+
+        .btn-add-remove {
+            gap: 5%;
+            float: right;
+        }
+
+        .user-hi {
+            color: #fff;
+            align-items: center;
+            display: flex;
+            margin-right: 1%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #loaderLogin {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark nav-bg">
+            <div class="d-flex justify-content-end w-100">
+                <span class="user-hi" id="hiUser"></span>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="collapse-transparent p-4">
+                <ul class="navbar-nav">
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="viewHistory">View History</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="settings">Settings</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3" style="text-align: right;">
+                <img class="img-fluid img-align" alt="bt-logo" src="../static/logos/512px-BT_logo_2019.png">
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-sm-start">UTH Automation Help</h2>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <div class="row">
+            <h4>Support Email:</h4> &nbsp;&nbsp;
+            <a style="font-size: 1.25rem;" href="mailto:support@uth-uk.com">support@uth-uk.com</a>
+        </div>
+        <div class="row">
+            <h4>Phone Number:</h4> &nbsp;&nbsp;
+            <a style="font-size: 1.25rem;" href="tel:0787233 0015">0787233 0015</a>
+        </div>
+        <div class="row">
+            <h4>Version Number:</h4> &nbsp;&nbsp;
+            <p style="font-size: 1.25rem;">beta-1.0</a>
+        </div>
+        <br />
+        <hr>
+        <br />
+
+        <div id="loaderLogin" class="hidden">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <footer>
+            <div class="bottom-right">
+                <p class="pwd-by">Powered by</p>
+                <a href="https://uth-uk.com" target="_blank">
+                    <img class="img-fluid" src="https://uth-uk.com/Images/img/logo.gif" />
+                </a>
+            </div>
+        </footer>
+
+        <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <script>
+
+            const loaderLogin = document.getElementById('loaderLogin');
+
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById('hiUser').innerText = `${sessionStorage.getItem('userEmail')}`;
+            });
+
+            document.getElementById("logout").addEventListener("click", function () {
+                // Show loader
+                loaderLogin.classList.remove('hidden');
+
+                fetch("http://localhost:3000/remove-token", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: {}
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    localStorage.removeItem("token");
+                    sessionStorage.removeItem("userEmail");
+                }).catch(error => {
+                    localStorage.removeItem("token");
+                    sessionStorage.removeItem("userEmail");
+                }).finally(() => {
+                    // Hide loader
+                    loaderLogin.classList.add('hidden');
+                    window.location.href = '/';
+                });
+            });
+
+            document.getElementById("dashboard").addEventListener('click', function () {
+                window.location.href = '/dashboard';
+            });
+
+            document.getElementById("viewHistory").addEventListener('click', function () {
+                window.location.href = '/history';
+            });
+
+            document.getElementById("settings").addEventListener('click', function () {
+                window.location.href = '/settings';
+            });
+
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTH Automation Framework</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" />
+
+  <style>
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .dropdown-menu {
+      padding: 0.5rem;
+    }
+
+    .dropdown-menu .form-check {
+      padding: 0.2rem;
+    }
+
+    .card-deck .card {
+      background-color: #0b5394;
+      min-width: 300px;
+      color: #fff;
+      border: 0;
+    }
+
+    .card-heading {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 1.25rem 1.25rem 0;
+      border-left: 25px solid #e94b28;
+      background-color: #312e67;
+    }
+
+    .submit-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: rgb(85, 20, 180);
+      align-items: center;
+      text-align: center;
+      margin-bottom: 15%;
+      margin-top: 3%;
+    }
+
+    h3 {
+      color: rgb(85, 20, 180);
+      margin-bottom: 2%;
+    }
+
+    .img-align {
+      width: 70px;
+      height: 70px;
+    }
+
+    .btn-bt {
+      background-color: #0b5394;
+      color: #fff;
+    }
+
+    .lbl-class {
+      color: rgb(85, 20, 180);
+    }
+
+    .bottom-right {
+      float: right;
+    }
+
+    .pwd-by {
+      color: #312e67;
+      text-align: center;
+    }
+
+    .nav-bg {
+      background-color: #312e67 !important;
+    }
+
+    .nav-heading {
+      font-size: larger;
+      color: #0b5394;
+    }
+
+    .collapse-transparent {
+      background-color: rgb(202 202 213 / 50%);
+    }
+
+    .btn-add-remove {
+      gap: 5%;
+      float: right;
+    }
+
+    /* OK button */
+    #confirmOK {
+      background-color: #0b5394;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .user-hi {
+      color: #fff;
+      align-items: center;
+      display: flex;
+      margin-right: 1%;
+    }
+
+    .multi-email-div {
+      display: flex;
+      gap: 3%;
+      width: 111%;
+    }
+
+    .align-eye-icon {
+      display: flex;
+      width: 106%;
+      cursor: pointer;
+    }
+
+    .align-icon {
+      margin-top: 10px !important;
+      position: relative;
+      right: 10%;
+    }
+
+    .custom-icon {
+      color: #0b5394;
+      font-size: 3rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #loaderLogin {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pos-f-t">
+    <nav class="navbar navbar-dark nav-bg">
+      <div class="d-flex justify-content-end w-100">
+        <span class="user-hi" id="hiUser"></span>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="collapse-transparent p-4">
+        <ul class="navbar-nav">
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="viewHistory">View History</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="settings">Settings</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="help">Help</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-3" style="text-align: right">
+        <img class="img-fluid img-align" alt="bt-logo" src="../static/logos/512px-BT_logo_2019.png" />
+      </div>
+      <div class="col-md-6">
+        <h2 class="text-sm-start">UTH Automation Configuration</h2>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <h3>Device Configuration</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group lbl-class">
+          <label for="callDuration">Call Duration</label>
+          <input type="text" id="callDuration" class="form-control" placeholder="Enter Call Duration" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group lbl-class">
+          <label for="originNumber">Origination Number (M1)</label>
+          <input type="number" id="originNumber" class="form-control" placeholder="Enter Origination Number (M1)" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group lbl-class" id="terminationContainer">
+          <label for="terminationNumber">Termination Number (M2)</label>
+          <input type="number" id="terminationNumber" class="form-control"
+            placeholder="Enter Termination Number (M2)" />
+        </div>
+        <div class="input-group-append btn-add-remove">
+          <button type="button" class="btn btn-bt mt-2" id="addTerminationNumber">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <h3>Email Configuration</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group lbl-class" id="emailContainer">
+          <label for="multipleEmailId">Email IDs</label>
+          <input type="email" id="multipleEmailId" class="form-control" placeholder="Enter email" />
+          <br />
+        </div>
+        <div class="input-group-append btn-add-remove">
+          <button type="button" class="btn btn-bt mt-2" id="addMultipleEmails">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <h3>Server Configuration</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group lbl-class">
+          <label for="serverUserName">User Name</label>
+          <input type="text" id="serverUserName" class="form-control" placeholder="Enter User Name" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div data-mdb-input-init class="form-outline form-group">
+          <label class="form-label lbl-class" for="serverPassword">Password</label>
+          <div class="position-relative align-eye-icon">
+            <input type="password" id="serverPassword" class="form-control" placeholder="Enter Password" />
+            <i class="fa fa-eye eye-icon align-icon" id="togglePassword"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group lbl-class">
+          <label for="folderName">Folder Name</label>
+          <input type="text" id="folderName" class="form-control" placeholder="Enter Folder Name" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group lbl-class">
+          <label for="serverUrl">URL</label>
+          <input type="text" id="serverUrl" class="form-control" placeholder="Enter URL" />
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+
+    <!-- Error message -->
+    <div id="errorMessage" class="text-center error-message"></div>
+    <br />
+    <!-- Save Button -->
+    <div class="text-center">
+      <button id="saveBtn" class="btn btn-bt">Save Changes</button>
+    </div>
+    <div id="loaderLogin" class="hidden">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div id="confirmModal" class="modal">
+      <div class="modal-content text-center" style="width: 20%; left: 40%; align-items: center">
+        <br />
+        <i class="bi bi-check custom-icon"></i>
+        <p>Changes saved successfully!</p>
+        <button id="confirmOK">OK</button>
+        <br />
+      </div>
+    </div>
+
+    <footer>
+      <div class="bottom-right">
+        <p class="pwd-by">Powered by</p>
+        <a href="https://uth-uk.com" target="_blank">
+          <img class="img-fluid" src="https://uth-uk.com/Images/img/logo.gif" />
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let callDuration = "";
+    let originNumber = "";
+    let terminationCount = 1;
+    let terminationNumbers = [];
+    let serverDetails = {};
+
+    let emailCount = 1;
+    let emailIds = [];
+
+    const phoneNumberValidation = /^\d{11,}$/;
+    const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    document.addEventListener("DOMContentLoaded", async function () {
+      document.getElementById("hiUser").innerText = `${sessionStorage.getItem(
+        "userEmail"
+      )}`;
+
+      //#region  api calls
+
+      await fetch("/getDeviceConfig", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data) {
+            callDuration = data.callDuration;
+            originNumber = data.originNumber;
+            terminationNumbers = data.terminationNumbers;
+            emailIds = data.emailIds;
+            serverDetails = data.serverDetails;
+          } else {
+            document.getElementById("errorMessage").innerText =
+              data?.message ?? "Invalid credentials";
+          }
+        })
+        .catch((error) => {
+          console.error("Error submitting data:", error);
+        })
+
+      //#endregion
+
+      var callDurationElement = document.getElementById("callDuration");
+
+      if (!callDuration || callDuration === "" || callDuration === null) {
+        callDurationElement.value = "";
+      } else {
+        callDurationElement.value = callDuration;
+      }
+
+      var originNumberElement = document.getElementById("originNumber");
+
+      if (!originNumber || originNumber === "" || originNumber === null) {
+        originNumberElement.value = "";
+      } else {
+        originNumberElement.value = originNumber;
+      }
+
+      var terminationNumbers = terminationNumbers || [];
+      terminationNumbers.forEach((number, index) => {
+        if (index === 0) {
+          document.getElementById("terminationNumber").value = number;
+        } else {
+          addTerminationField(index + 1, number);
+        }
+      });
+
+      var emailIds = emailIds || [];
+      emailIds.forEach((email, index) => {
+        if (index === 0) {
+          document.getElementById("multipleEmailId").value = email;
+        } else {
+          addMultipleEmailIds(index + 1, email);
+        }
+      });
+
+      var serverDetails = serverDetails || {};
+      Object.entries(serverDetails).map(
+        ([key, value]) => (document.getElementById(key).value = value)
+      );
+
+      if (!localStorage.getItem("token")) {
+        sessionStorage.removeItem("userEmail");
+        window.location.href = "/";
+      }
+    });
+
+    const addTerminationField = (count, value = "") => {
+      document.getElementById("errorMessage").innerText = "";
+      terminationCount++;
+      const container = document.getElementById("terminationContainer");
+      const newDiv = document.createElement("div");
+      newDiv.className = "form-group lbl-class mt-2";
+      newDiv.id = `terminationDiv${terminationCount}`;
+      newDiv.innerHTML = `
+                    <div>
+                        <label for="terminationNumber${terminationCount}">Termination Number (M${terminationCount + 1
+        })</label>
+                        <button type="button" class="btn btn-danger btn-sm mt-2 bottom-right" onclick="removeTerminationNumber(${terminationCount})">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <input type="number" id="terminationNumber${terminationCount}" class="form-control"
+                        placeholder="Enter Termination Number (M${terminationCount + 1
+        })" value="${value}">
+                `;
+      container.appendChild(newDiv);
+      attachInputListeners();
+    };
+
+    const removeTerminationNumber = (id) => {
+      document.getElementById("errorMessage").innerText = "";
+      const element = document.getElementById(`terminationDiv${id}`);
+      element.remove();
+      terminationCount--;
+      updateTerminationFields();
+      attachInputListeners();
+    };
+
+    const updateTerminationFields = () => {
+      const container = document.getElementById("terminationContainer");
+      const children = container.children;
+      let visibleTerminationCount = 1;
+      for (let i = 1; i < children.length; i++) {
+        if (children[i].id.startsWith("terminationDiv")) {
+          visibleTerminationCount++;
+          const child = children[i];
+          const label = child.querySelector("label");
+          const input = child.querySelector("input");
+          const button = child.querySelector("button");
+          label.textContent = `Termination Number (M${visibleTerminationCount + 1
+            })`;
+          input.setAttribute(
+            "id",
+            `terminationNumber${visibleTerminationCount}`
+          );
+          input.setAttribute(
+            "placeholder",
+            `Enter Termination Number (M${visibleTerminationCount + 1})`
+          );
+          button.setAttribute(
+            "onclick",
+            `removeTerminationNumber(${visibleTerminationCount})`
+          );
+          child.setAttribute(
+            "id",
+            `terminationDiv${visibleTerminationCount}`
+          );
+        }
+      }
+      terminationCount = visibleTerminationCount;
+      attachInputListeners();
+    };
+
+    const validateTerminationFields = () => {
+      for (let i = 1; i <= terminationCount; i++) {
+        const terminationNumberElement =
+          i === 1
+            ? document.getElementById(`terminationNumber`)
+            : document.getElementById(`terminationNumber${i}`);
+        if (
+          terminationNumberElement &&
+          terminationNumberElement.value.trim() === ""
+        ) {
+          return {
+            isValid: false,
+            errorMessage: `Please fill in all the termination number fields.`,
+          };
+        }
+
+        if (
+          !phoneNumberValidation.test(terminationNumberElement?.value?.trim())
+        ) {
+          return {
+            isValid: false,
+            errorMessage: `Termination numbers should contain atleast 11 digits.`,
+          };
+        }
+      }
+
+      return { isValid: true, errorMessage: "" };
+    };
+
+    const attachInputListeners = () => {
+      for (let i = 1; i <= terminationCount; i++) {
+        const terminationNumberElement = document.getElementById(
+          `terminationNumber${i}`
+        );
+        if (terminationNumberElement) {
+          terminationNumberElement.addEventListener("input", () => {
+            document.getElementById("errorMessage").innerText = "";
+          });
+        }
+      }
+      const initialTerminationNumber =
+        document.getElementById("terminationNumber");
+      if (initialTerminationNumber) {
+        initialTerminationNumber.addEventListener("input", () => {
+          document.getElementById("errorMessage").innerText = "";
+        });
+      }
+      for (let i = 1; i <= emailCount; i++) {
+        const multipleEmailIdElement = document.getElementById(
+          `multipleEmailId${i}`
+        );
+        if (multipleEmailIdElement) {
+          multipleEmailIdElement.addEventListener("input", () => {
+            document.getElementById("errorMessage").innerText = "";
+          });
+        }
+      }
+      const initialmultipleEmailId =
+        document.getElementById("multipleEmailId");
+      if (initialmultipleEmailId) {
+        initialmultipleEmailId.addEventListener("input", () => {
+          document.getElementById("errorMessage").innerText = "";
+        });
+      }
+    };
+
+    const addMultipleEmailIds = (count, value = "") => {
+      document.getElementById("errorMessage").innerText = "";
+      emailCount++;
+      const container = document.getElementById("emailContainer");
+      const newDiv = document.createElement("div");
+      newDiv.className = "form-group lbl-class mt-2";
+      newDiv.id = `emailDiv${emailCount}`;
+      newDiv.innerHTML = `
+                    <div class="multi-email-div">
+                        <input type="email" id="multipleEmailId${emailCount}" class="form-control"
+                        placeholder="Enter email" value="${value}">
+                        <button type="button" class="btn btn-danger btn-sm bottom-right" onclick="removeMultipleEmailIds(${emailCount})">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                `;
+      container.appendChild(newDiv);
+      attachInputListeners();
+    };
+
+    const removeMultipleEmailIds = (id) => {
+      document.getElementById("errorMessage").innerText = "";
+      const element = document.getElementById(`emailDiv${id}`);
+      element.remove();
+      emailCount--;
+      // updateMultipleEmailIds();
+      attachInputListeners();
+    };
+
+    const validateMultipleEmailIds = () => {
+      for (let i = 1; i <= emailCount; i++) {
+        const multipleEmailIdElement =
+          i === 1
+            ? document.getElementById(`multipleEmailId`)
+            : document.getElementById(`multipleEmailId${i}`);
+        // if (
+        //   multipleEmailIdElement &&
+        //   multipleEmailIdElement?.value?.trim() === ""
+        // ) {
+        //   return {
+        //     isValid: false,
+        //     errorMessage: `Please, fill in all the email fields.`,
+        //   };
+        // }
+
+        if (
+          !emailValidation.test(multipleEmailIdElement?.value?.trim()) &&
+          multipleEmailIdElement?.value?.trim() !== ""
+        ) {
+          return {
+            isValid: false,
+            errorMessage: `${multipleEmailIdElement?.value?.trim()} is not a valid email.`,
+          };
+        }
+      }
+
+      if (emailCount > 1) {
+        const initialmultipleEmailId =
+          document.getElementById("multipleEmailId");
+        if (initialmultipleEmailId.value.trim() === "") {
+          return false;
+        }
+      }
+
+      return {
+        isValid: true,
+        errorMessage: ``,
+      };
+    };
+
+    document
+      .getElementById("togglePassword")
+      .addEventListener("click", function () {
+        const type =
+          document.getElementById("serverPassword").getAttribute("type") ===
+            "password"
+            ? "text"
+            : "password";
+        document.getElementById("serverPassword").setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+      });
+
+    document.getElementById("logout").addEventListener("click", function () {
+      // Show loader
+      loaderLogin.classList.remove('hidden');
+
+      fetch("http://localhost:3000/remove-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      }).then(response => {
+        return response.json();
+      }).then(data => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("userEmail");
+      }).catch(error => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("userEmail");
+      }).finally(() => {
+        // Hide loader
+        loaderLogin.classList.add('hidden');
+        window.location.href = '/';
+      });
+    });
+
+    document
+      .getElementById("dashboard")
+      .addEventListener("click", function () {
+        window.location.href = "/dashboard";
+      });
+
+    document
+      .getElementById("viewHistory")
+      .addEventListener("click", function () {
+        window.location.href = "/history";
+      });
+
+    document
+      .getElementById("settings")
+      .addEventListener("click", function () {
+        window.location.href = "/settings";
+      });
+
+    document.getElementById("help").addEventListener("click", function () {
+      window.location.href = "/help";
+    });
+
+    document
+      .getElementById("addTerminationNumber")
+      .addEventListener("click", () => {
+        addTerminationField();
+      });
+
+    document
+      .getElementById("addMultipleEmails")
+      .addEventListener("click", () => {
+        addMultipleEmailIds();
+      });
+
+    document
+      .getElementById("saveBtn")
+      .addEventListener("click", async function () {
+        if (
+          document.getElementById("callDuration").value.trim() === "" ||
+          document.getElementById("callDuration").value.trim() === "0" ||
+          document.getElementById("terminationNumber").value.trim() === "" ||
+          document.getElementById("originNumber").value.trim() === ""
+        ) {
+          document.getElementById("errorMessage").innerText =
+            "Please fill in all the termination number fields.";
+          return;
+        }
+
+        if (
+          !phoneNumberValidation.test(
+            document.getElementById("originNumber").value.trim()
+          )
+        ) {
+          document.getElementById("errorMessage").innerText =
+            "Origin number should contain atleast 11 digits.";
+          return;
+        }
+
+        const validationResult = validateTerminationFields();
+        if (!validationResult.isValid) {
+          document.getElementById("errorMessage").innerText =
+            validationResult.errorMessage;
+          return;
+        }
+
+        const emailValidationResult = validateMultipleEmailIds();
+        if (!emailValidationResult.isValid) {
+          document.getElementById("errorMessage").innerText =
+            emailValidationResult.errorMessage;
+          return;
+        }
+
+        callDuration = document.getElementById("callDuration").value;
+        originNumber = document.getElementById("originNumber").value;
+
+        if (document.getElementById("terminationNumber").value) {
+          terminationNumbers.push(
+            document.getElementById("terminationNumber").value
+          );
+        }
+
+        for (let i = 1; i <= terminationCount; i++) {
+          const terminationNumberElement = document.getElementById(
+            `terminationNumber${i}`
+          );
+          if (
+            terminationNumberElement &&
+            !(terminationNumberElement.value === "")
+          ) {
+            terminationNumbers.push(terminationNumberElement.value);
+          }
+        }
+
+        //emails
+        if (document.getElementById("multipleEmailId").value) {
+          emailIds.push(document.getElementById("multipleEmailId").value);
+        }
+        for (let i = 1; i <= emailCount; i++) {
+          const emailsElement = document.getElementById(
+            `multipleEmailId${i}`
+          );
+          if (emailsElement && !(emailsElement.value === "")) {
+            emailIds.push(emailsElement.value);
+          }
+        }
+
+        //server
+        const serverUserName = document.getElementById("serverUserName").value;
+        const serverPassword = document.getElementById("serverPassword").value;
+        const folderName = document.getElementById("folderName").value;
+        const serverUrl = document.getElementById("serverUrl").value;
+
+        // Check and set serverUserName
+        if (serverUserName) {
+          serverDetails["serverUserName"] = serverUserName;
+        }
+
+        // Check and set serverPassword
+        if (serverPassword) {
+          serverDetails["serverPassword"] = serverPassword;
+        }
+
+        // Check and set folderName
+        if (folderName) {
+          serverDetails["folderName"] = folderName;
+        }
+
+        // Check and set serverUrl
+        if (serverUrl) {
+          serverDetails["serverUrl"] = serverUrl;
+        }
+        //#region  api
+
+        await fetch("/insertDeviceConfig", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            callDuration: callDuration,
+            originNumber: originNumber,
+            terminationNumbers: terminationNumbers,
+            emailIds: emailIds,
+            serverDetails: serverDetails,
+          }),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log({ data });
+            if (!!data) {
+              userConfig = {};
+              terminationNumbers = [];
+            } else {
+              document.getElementById("errorMessage").innerText =
+                data?.message ?? "Error in saving data!";
+            }
+          })
+          .catch((error) => {
+            console.error("Error submitting data:", error);
+          })
+
+        //#endregion
+        console.log("fghjbkn");
+        document.getElementById("confirmModal").style.display = "block";
+      });
+
+    // Event listener for OK button in modal
+    document
+      .getElementById("confirmOK")
+      .addEventListener("click", function () {
+        document.getElementById("confirmModal").style.display = "none";
+        window.location.href = "/dashboard";
+      });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTH Automation Framework</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+  <style>
+    .dropdown-menu {
+      padding: 0.5rem;
+    }
+
+    .dropdown-menu .form-check {
+      padding: 0.2rem;
+    }
+
+    .card-deck .card {
+      background-color: #0b5394;
+      min-width: 300px;
+      color: #fff;
+      border: 0;
+    }
+
+    .card-heading {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 1.25rem 1.25rem 0;
+      border-left: 25px solid #e94b28;
+      background-color: #312e67;
+    }
+
+    .submit-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: rgb(85, 20, 180);
+      align-items: center;
+      text-align: center;
+      margin-bottom: 15%;
+      margin-top: 3%;
+    }
+
+    h3 {
+      color: rgb(85, 20, 180);
+      margin-bottom: 2%;
+    }
+
+    .img-align {
+      width: 70px;
+      height: 70px;
+    }
+
+    .btn-bt {
+      background-color: #0b5394;
+      color: #fff;
+    }
+
+    .lbl-class {
+      color: rgb(85, 20, 180);
+    }
+
+    .bottom-right {
+      float: right;
+      margin-bottom: 4%;
+    }
+
+    .pwd-by {
+      color: #312e67;
+      text-align: center;
+    }
+
+    .nav-bg {
+      background-color: #312e67 !important;
+    }
+
+    .nav-heading {
+      font-size: larger;
+      color: #0b5394;
+    }
+
+    .collapse-transparent {
+      background-color: rgb(202 202 213 / 50%);
+    }
+
+    .btn-add-remove {
+      gap: 5%;
+      float: right;
+    }
+
+    .user-hi {
+      color: #fff;
+      align-items: center;
+      display: flex;
+      margin-right: 1%;
+    }
+
+    .mainContent {
+      margin-inline: auto;
+    }
+
+    .rightContent {
+      padding: 1.25rem;
+    }
+
+    .sideNavBtn {
+      /* background-color: #0b5394; */
+      color: #0b5394;
+      width: 18rem;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 6px;
+      font-size: 1.7rem;
+    }
+
+    .subLayout {
+      row-gap: 1.25rem;
+    }
+
+    .form-label {
+      color: rgb(85, 20, 180);
+    }
+
+    .saveBtn {
+      width: 100%;
+      border-radius: 6px;
+      height: 50px;
+      color: #fff;
+      background-color: #0b5394;
+      border-color: transparent;
+    }
+
+    .saveBtn :disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      width: 100%;
+      border-radius: 6px;
+      height: 50px;
+      color: #fff;
+      background-color: #0b5394;
+      border-color: transparent;
+    }
+
+    .align-icon {
+      position: relative;
+      right: 10%;
+      align-self: center;
+      color: #0b5394;
+    }
+
+    .align-eye-icon {
+      display: flex;
+      cursor: pointer;
+    }
+
+    .align-icon-currentPsw {
+      position: relative;
+      right: 5%;
+      align-self: center;
+      color: #0b5394;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+    }
+
+    .success-message {
+      color: green;
+      text-align: center;
+    }
+
+    input[type="password"] {
+      color: #808080;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #loaderLogin {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pos-f-t">
+    <nav class="navbar navbar-dark nav-bg">
+      <div class="d-flex justify-content-end w-100">
+        <span class="user-hi" id="hiUser"></span>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="collapse-transparent p-4">
+        <ul class="navbar-nav">
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="viewHistory">View History</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="help">Help</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-3" style="text-align: right">
+        <img class="img-fluid img-align" alt="bt-logo" src="../static/logos/512px-BT_logo_2019.png" />
+      </div>
+      <div class="col-md-6">
+        <h2 class="text-sm-start">UTH Automation Settings</h2>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+    <hr>
+    <br /><br />
+
+    <div class="row mainContent">
+      <div class="col-md-3">
+        <aside>
+          <div class="sideNavBtn">
+            <p style="text-align: center; margin-bottom: 0px">Reset Password</p>
+          </div>
+        </aside>
+      </div>
+      <div class="col-md-8">
+        <div class="card rightContent">
+          <div class="row subLayout">
+            <div class="col-md-12">
+              <div data-mdb-input-init class="form-outline">
+                <label class="form-label" for="CurrentPassword">Current Password *</label>
+                <div class="position-relative align-eye-icon">
+                  <input type="password" id="CurrentPassword" class="form-control form-control-lg"
+                    placeholder="Enter Current password" autocomplete="current-password" required />
+                  <i class="fa fa-eye eye-icon align-icon-currentPsw" id="togglePassword"></i>
+                </div>
+              </div>
+            </div>
+            <div data-mdb-input-init class="form-outline col-md-6">
+              <label class="form-label" for="newPassword">New Password *</label>
+              <div class="position-relative align-eye-icon">
+                <input type="password" id="newPassword" class="form-control form-control-lg"
+                  placeholder="Enter new password" autocomplete="new-password" required />
+                <i class="fa fa-eye eye-icon align-icon" id="toggleNewPassword"></i>
+              </div>
+            </div>
+            <div data-mdb-input-init class="form-outline col-md-6">
+              <label class="form-label" for="confirmPassword">Confirm Password *</label>
+              <div class="position-relative align-eye-icon">
+                <input type="password" id="confirmPassword" class="form-control form-control-lg"
+                  placeholder="Confirm new password" autocomplete="confirmPassword" required />
+                <i class="fa fa-eye eye-icon align-icon" id="toggleConfirmPassword"></i>
+              </div>
+            </div>
+            <div class="col-md-12" id="passwordErrorMessage" class="error-message"></div>
+            <div class="col-md-12" style="display: flex; justify-content: end">
+              <div class="col-md-4">
+                <button class="saveBtn" id="changePsw" type="submit">
+                  Update Password
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+
+    <div id="loaderLogin" class="hidden">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <footer>
+      <div class="bottom-right">
+        <p class="pwd-by">Powered by</p>
+        <a href="https://uth-uk.com" target="_blank">
+          <img class="img-fluid" src="https://uth-uk.com/Images/img/logo.gif" />
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("hiUser").innerText = `${sessionStorage.getItem(
+        "userEmail"
+      )}`;
+    });
+    const loaderLogin = document.getElementById('loaderLogin');
+
+    document.getElementById("logout").addEventListener("click", function () {
+      // Show loader
+      loaderLogin.classList.remove('hidden');
+
+      fetch("http://localhost:3000/remove-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      }).then(response => {
+        return response.json();
+      }).then(data => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("userEmail");
+      }).catch(error => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("userEmail");
+      }).finally(() => {
+        // Hide loader
+        loaderLogin.classList.add('hidden');
+        window.location.href = '/';
+      });
+    });
+
+    document
+      .getElementById("dashboard")
+      .addEventListener("click", function () {
+        window.location.href = "/dashboard";
+      });
+
+    document
+      .getElementById("viewHistory")
+      .addEventListener("click", function () {
+        window.location.href = "/history";
+      });
+
+    document.getElementById("help").addEventListener("click", function () {
+      window.location.href = "/help";
+    });
+
+    const CurrentPassword = document.getElementById("CurrentPassword");
+    const newPassword = document.getElementById("newPassword");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const passwordErrorMessage = document.getElementById(
+      "passwordErrorMessage"
+    );
+
+    document
+      .getElementById("togglePassword")
+      .addEventListener("click", function () {
+        const type =
+          CurrentPassword.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        CurrentPassword.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+      });
+
+    document
+      .getElementById("toggleNewPassword")
+      .addEventListener("click", function () {
+        const type =
+          newPassword.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        newPassword.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+      });
+
+    document
+      .getElementById("toggleConfirmPassword")
+      .addEventListener("click", function () {
+        const type =
+          confirmPassword.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        confirmPassword.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+      });
+
+    document
+      .getElementById("changePsw")
+      .addEventListener("click", async function () {
+        const CurrentPsw = CurrentPassword.value;
+        const newPwd = newPassword.value;
+        const confirmPwd = confirmPassword.value;
+        const passwordRegex =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
+
+        if (CurrentPsw === "" || newPwd === "" || confirmPwd === "") {
+          passwordErrorMessage.innerText = "All fields are mandatory!";
+          passwordErrorMessage.classList.add("error-message");
+          passwordErrorMessage.classList.remove("success-message");
+          return;
+        }
+
+        if (CurrentPsw === newPwd) {
+          passwordErrorMessage.innerText =
+            "current password and  new password should not match";
+          passwordErrorMessage.classList.add("error-message");
+          passwordErrorMessage.classList.remove("success-message");
+          return;
+        }
+
+        if (newPwd !== confirmPwd) {
+          passwordErrorMessage.innerText =
+            "New password and confirm password should be same!";
+          passwordErrorMessage.classList.add("error-message");
+          passwordErrorMessage.classList.remove("success-message");
+          return;
+        }
+
+        if (
+          !passwordRegex.test(newPwd) ||
+          !passwordRegex.test(CurrentPsw) ||
+          !passwordRegex.test(confirmPwd)
+        ) {
+          passwordErrorMessage.innerText =
+            "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character!";
+          passwordErrorMessage.classList.add("error-message");
+          passwordErrorMessage.classList.remove("success-message");
+          return;
+        }
+
+        // Show loader
+        //   loaderReset.classList.remove("hidden");
+
+        let resetPswDetails = {
+          currentPassword: CurrentPsw,
+          newPassword: newPwd,
+          confirmPassword: confirmPwd,
+        };
+        document.querySelector(".saveBtn").disabled = true;
+        await fetch(
+          "https://bw71a0qkoh.execute-api.ap-south-1.amazonaws.com/prod/v1/changePassword",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify(resetPswDetails),
+          }
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data?.Items) {
+              passwordErrorMessage.innerText =
+                data?.Items ?? "Password operation successful";
+              passwordErrorMessage.classList.remove("error-message");
+              passwordErrorMessage.classList.add("success-message");
+            } else {
+              passwordErrorMessage.innerText =
+                data?.message ?? "Error processing password";
+              passwordErrorMessage.classList.add("error-message");
+              passwordErrorMessage.classList.remove("success-message");
+            }
+          })
+          .catch((error) => {
+            console.error("Error processing password:", error);
+          })
+          .finally(() => {
+            // Hide loader
+            //   loaderReset.classList.add("hidden");
+          });
+        document.querySelector(".saveBtn").disabled = false;
+      });
+  </script>
+</body>
+
+</html>

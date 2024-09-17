@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Results</title>
+
+    <style>
+        .card {
+            background-color: #0b5394;
+            min-width: 300px;
+            color: #fff;
+            border: 0;
+        }
+
+        h2 {
+            color: rgb(85, 20, 180);
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15%;
+            margin-top: 3%;
+        }
+
+        h3 {
+            color: rgb(85, 20, 180);
+            margin-bottom: 5%;
+            /* margin-top: 3%; */
+        }
+
+        #loadingLabel {
+            font-size: 18px;
+            font-weight: bold;
+            /* color: rgb(85, 20, 180); */
+            color: #0b5394;
+            position: absolute;
+            /* top: 50%; */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: blinkingText 1.5s infinite;
+        }
+
+        .nav-bg {
+            background-color: #312e67 !important;
+        }
+
+        .nav-heading {
+            font-size: larger;
+            color: #0b5394;
+        }
+
+        .collapse-transparent {
+            background-color: rgb(202 202 213 / 50%);
+        }
+
+        @keyframes blinkingText {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .img-align {
+            width: 70px;
+            height: 70px;
+        }
+
+        .btn-bt {
+            background-color: #0b5394;
+            color: #fff;
+        }
+
+        .lbl-class {
+            color: rgb(85, 20, 180);
+        }
+
+        .form-check-input:disabled~.form-check-label,
+        .form-check-input[disabled]~.form-check-label {
+            color: #fff;
+        }
+
+        .form-check .form-check-input:disabled {
+            /* Ensure white background */
+            background-color: #000;
+            /* Optional: Adjust other styles for clarity */
+            border-color: #ff0000;
+            /* Match Bootstrap's disabled border color */
+            opacity: 1;
+            /* Ensure visibility */
+        }
+
+        #input {
+            background-color: #000 !important;
+        }
+
+        .bottom-right {
+            float: right;
+            margin-bottom: 4%;
+        }
+
+        .pwd-by {
+            color: #312e67;
+            text-align: center;
+        }
+
+        .card-heading {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1.25rem 1.25rem 0;
+            border-left: 25px solid #e94b28;
+            background-color: #312e67;
+        }
+
+        .user-hi {
+            color: #fff;
+            align-items: center;
+            display: flex;
+            margin-right: 1%;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(240, 233, 233, 0.897);
+            border-top-color: #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #loaderLogin {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pos-f-t">
+        <nav class="navbar navbar-dark nav-bg">
+            <div class="d-flex justify-content-end w-100">
+                <span class="user-hi" id="hiUser"></span>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="collapse-transparent p-4">
+                <ul class="navbar-nav">
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="viewHistory">View History</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="settings">Settings</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="help">Help</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link nav-heading" href="#!" id="logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3" style="text-align: right;">
+                <img class="img-fluid img-align" alt="bt-logo" src="../static/logos/512px-BT_logo_2019.png">
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-sm-start">UTH Automation Testcases Execution</h2>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group lbl-class">
+                    <label for="callDuration">Call Duration</label>
+                    <input disabled type="text" id="callDuration" class="form-control"
+                        placeholder="Enter Call Duration">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group lbl-class">
+                    <label for="originNumber">Origination Number (M1)</label>
+                    <input disabled type="number" id="originNumber" class="form-control"
+                        placeholder="Enter Origination Number (M1)">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group lbl-class" id="terminationContainer">
+                    <label for="terminationNumber">Termination Number (M2)</label>
+                    <input disabled type="number" id="terminationNumber" class="form-control"
+                        placeholder="Enter Termination Number (M2)">
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <hr>
+        <br />
+
+        <div>
+            <h3>Selected Testcases Execution Status</h3>
+        </div>
+
+        <div class="row card-deck">
+            <div class="col-md-6" id="testCasesContainer"></div>
+        </div>
+        <div class="text-center">
+            <br /><br /><br />
+            <div id="loadingLabel">Executing Tests. Please wait...</div>
+            <br />
+        </div>
+        <div class="col-md-3"></div>
+
+        <hr>
+        <div class="text-center mt-2" id="stopDiv">
+            <button id="stopBtn" class="btn btn-bt">Stop Test Execution</button>
+        </div>
+
+        <br />
+        <br />
+
+        <div id="loaderLogin" class="hidden">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <footer>
+            <div class="bottom-right">
+                <p class="pwd-by">Powered by</p>
+                <a href="https://uth-uk.com" target="_blank">
+                    <img class="img-fluid" src="https://uth-uk.com/Images/img/logo.gif" />
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let processId;
+        let intervalId;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('hiUser').innerText = `${sessionStorage.getItem('userEmail')}`;
+            let selectedTests = JSON.parse(sessionStorage.getItem("selectedTests"));
+            let totalTests = 0;
+            let terminationCount = 1;
+
+            document.getElementById("loadingLabel").style.display = "block";
+            document.getElementById("stopDiv").style.display = "block";
+
+            const loaderLogin = document.getElementById('loaderLogin');
+
+            const addTestCase = (cardTitle, testCases) => {
+                const testCasesContainer = document.querySelector('#testCasesContainer');
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card mb-3';
+                const cardBody = `
+                    <div class="card-heading">
+                        <h5 class="card-title">${cardTitle}</h5>
+                    </div>
+                    <div class="card-body">
+                        ${testCases.map(testCase => `
+                            <div class="form-check" style="display: flex !important; gap: 3%;">
+                                <input class="form-check-input" type="checkbox" id="${testCase.id}" ${testCase.checked ? 'checked' : ''}>
+                                <label class="form-check-label" for="${testCase.id}">
+                                    ${testCase.label}
+                                </label>
+                                <div class="spinner"></div>
+                            </div>
+                        `).join('')}
+                    </div>`;
+                cardDiv.innerHTML = cardBody;
+                testCasesContainer.appendChild(cardDiv);
+            }
+
+            if (selectedTests.fiveg.registration || selectedTests.fiveg.call) {
+                const fiveGTestCases = [];
+
+                if (selectedTests.fiveg.registration) {
+                    fiveGTestCases.push({ id: '5gRegistration', label: '5G Registration', checked: true });
+                }
+
+                if (selectedTests.fiveg.call) {
+                    fiveGTestCases.push({ id: '5gCall', label: 'EPS Fallback', checked: true });
+                }
+                addTestCase('5G', fiveGTestCases);
+            }
+
+            if (selectedTests.volte.call_test || selectedTests.volte.sms_test || selectedTests.ims.registration || selectedTests.ims.de_registration) {
+                const volteTestCases = [];
+
+                if (selectedTests.volte.call_test) {
+                    volteTestCases.push({ id: 'volteCallTest', label: 'VoLTE Call', checked: true });
+                }
+                if (selectedTests.volte.sms_test) {
+                    volteTestCases.push({ id: 'volteSmsTest', label: 'PS SMS', checked: true });
+                }
+                if (selectedTests.ims.registration) {
+                    volteTestCases.push({ id: 'imsRegistration', label: 'IMS Registration', checked: true });
+                }
+                if (selectedTests.ims.de_registration) {
+                    volteTestCases.push({ id: 'imsDeRegistration', label: 'IMS De-registration', checked: true });
+                }
+                addTestCase('VoLTE/IMS', volteTestCases);
+            }
+
+            if (selectedTests.callBarring.all_incoming || selectedTests.callBarring.all_outgoing || selectedTests.voiceMail.cfna || selectedTests.voiceMail.cfb || selectedTests.voiceMail.cfu || selectedTests.call.hold_and_resume || selectedTests.call.waiting || selectedTests.call.busy || selectedTests.call.fwd_not_ans || selectedTests.call.fwd_busy || selectedTests.call.fwd_unconditional) {
+
+                const callBarringTestCases = [];
+
+                if (selectedTests.callBarring.all_incoming) {
+                    callBarringTestCases.push({ id: 'allIncoming', label: 'All Incoming Calls Barring', checked: true });
+                }
+
+                if (selectedTests.callBarring.all_outgoing) {
+                    callBarringTestCases.push({ id: 'allOutgoing', label: 'All Outgoing Calls Barring', checked: true });
+                }
+
+                if (selectedTests.voiceMail.cfna) {
+                    callBarringTestCases.push({ id: 'voiceMailCFNA', label: 'Voice Mail CFNA', checked: true });
+                }
+
+                if (selectedTests.voiceMail.cfb) {
+                    callBarringTestCases.push({ id: 'voiceMailCFB', label: 'Voice Mail CFB', checked: true });
+                }
+
+                if (selectedTests.voiceMail.cfu) {
+                    callBarringTestCases.push({ id: 'voiceMailCFU', label: 'Voice Mail CFU', checked: true });
+                }
+
+                if (selectedTests.call.hold_and_resume) {
+                    callBarringTestCases.push({ id: 'holdAndResume', label: 'Call Hold and Resume', checked: true });
+                }
+
+                if (selectedTests.call.waiting) {
+                    callBarringTestCases.push({ id: 'callWaiting', label: 'Call Waiting', checked: true });
+                }
+
+                if (selectedTests.call.busy) {
+                    callBarringTestCases.push({ id: 'callBusy', label: 'User Busy', checked: true });
+                }
+
+                if (selectedTests.call.fwd_not_ans) {
+                    callBarringTestCases.push({ id: 'fwdNotAnswer', label: 'Call Forward User Not Answer', checked: true });
+                }
+
+                if (selectedTests.call.fwd_busy) {
+                    callBarringTestCases.push({ id: 'fwdBusy', label: 'Call Forward User Busy', checked: true });
+                }
+
+                if (selectedTests.call.fwd_unconditional) {
+                    callBarringTestCases.push({ id: 'fwdUnconditional', label: 'Call Forward Unconditional', checked: true });
+                }
+
+                addTestCase('Supplementary Services', callBarringTestCases);
+            }
+
+            fetch("http://localhost:3000/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(selectedTests)
+            }).then(response => response.json())
+                .then(data => {
+                    // alert(`Tests execution started with PID: ${data.pid}`);
+                    processId = `${data.pid}`;
+                    console.log(processId);
+                    startMonitoringProcess(processId)
+                }).catch(error => {
+                    console.error("Error submitting data:", error);
+                });
+
+            const addTerminationField = (count, value = '') => {
+                terminationCount++;
+                const container = document.getElementById('terminationContainer');
+                const newDiv = document.createElement('div');
+                newDiv.className = 'form-group lbl-class mt-2';
+                newDiv.id = `terminationDiv${terminationCount}`;
+                newDiv.innerHTML = `
+                    <div class="">
+                        <label for="terminationNumber${terminationCount}">Termination Number (M${terminationCount + 1})</label></div>
+                    <input disabled type="number" id="terminationNumber${terminationCount}" class="form-control"
+                        placeholder="Enter Termination Number (M${terminationCount + 1})" value="${value}">                    
+                `;
+                container.appendChild(newDiv);
+            }
+
+            document.getElementById('originNumber').value = selectedTests.origin_number_m1;
+            // document.getElementById('terminationNumber').value = selectedTests.termination_number;
+            document.getElementById('callDuration').value = selectedTests.call_duration;
+
+            var terminationNumbers = JSON.parse(sessionStorage.getItem('terminationNumbers')) || [];
+            terminationNumbers.forEach((number, index) => {
+                if (index === 0) {
+                    document.getElementById('terminationNumber').value = number;
+                } else {
+                    addTerminationField(index + 1, number);
+                }
+            });
+
+
+            async function monitorProcess(pid) {
+                const response = await fetch(`http://localhost:3000/monitorProcess/${pid}`);
+                const data = await response.json();
+
+                const result = document.getElementById('loadingLabel');
+                if (data.running) {
+                    result.textContent = `Tests cases PID ${pid} is executing. Please wait.`;
+                } else {
+                    // result.textContent = `Process with PID ${pid} is not running.`;
+                    stopMonitoringProcess();
+                }
+            }
+
+            function startMonitoringProcess(pid) {
+                if (pid && !intervalId) {
+                    monitorProcess(pid); // Immediate check before starting the interval
+                    intervalId = setInterval(() => monitorProcess(pid), 1000);
+                }
+            }
+
+            function stopMonitoringProcess() {
+                document.getElementById("loadingLabel").style.display = "none";
+                document.getElementById("stopDiv").style.display = "none";
+
+                if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
+            }
+
+            document.getElementById("stopBtn").addEventListener("click", function () {
+                fetch("http://localhost:3000/stopProcess", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ pid: processId })
+                }).then(response => response.json())
+                    .then(data => {
+                        // Hide the loading label and stop button
+                        document.getElementById("loadingLabel").style.display = "none";
+                        document.getElementById("stopDiv").style.display = "none";
+
+                        // Display the pid in an alert
+                        alert(`Tests with PID: ${processId} is now stopped`);
+                        window.location.href = '/dashboard';
+                        console.log(data);
+                    }).catch(error => {
+                        console.error("Error submitting data:", error);
+                    });
+            });
+        });
+
+        document.getElementById("logout").addEventListener("click", function () {
+            // Show loader
+            loaderLogin.classList.remove('hidden');
+
+            fetch("http://localhost:3000/remove-token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: {}
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                localStorage.removeItem("token");
+                sessionStorage.removeItem("userEmail");
+            }).catch(error => {
+                localStorage.removeItem("token");
+                sessionStorage.removeItem("userEmail");
+            }).finally(() => {
+                // Hide loader
+                loaderLogin.classList.add('hidden');
+                window.location.href = '/';
+            });
+        });
+
+        document.getElementById("dashboard").addEventListener('click', function () {
+            window.location.href = '/dashboard';
+        });
+
+        document.getElementById("viewHistory").addEventListener('click', function () {
+            window.location.href = '/history';
+        });
+
+        document.getElementById("settings").addEventListener('click', function () {
+            window.location.href = '/settings';
+        });
+
+        document.getElementById("help").addEventListener('click', function () {
+            window.location.href = '/help';
+        });
+    </script>
+</body>
+
+</html>

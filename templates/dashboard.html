@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTH Automation Framework</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  </script>
+  <style>
+    .dropdown-menu {
+      padding: 0.5rem;
+    }
+
+    .dropdown-menu .form-check {
+      padding: 0.2rem;
+    }
+
+    .card-deck .card {
+      background-color: #0b5394;
+      min-width: 300px;
+      color: #fff;
+      border: 0;
+    }
+
+    .card-heading {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 1.25rem 1.25rem 0;
+      border-left: 25px solid #e94b28;
+      background-color: #312e67;
+    }
+
+    .submit-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: rgb(85, 20, 180);
+      align-items: center;
+      text-align: center;
+      margin-bottom: 15%;
+      margin-top: 3%;
+    }
+
+    .img-align {
+      width: 70px;
+      height: 70px;
+    }
+
+    .btn-bt {
+      background-color: #0b5394;
+      color: #fff;
+    }
+
+    .lbl-class {
+      color: rgb(85, 20, 180);
+    }
+
+    .bottom-right {
+      float: right;
+      margin-bottom: 4%;
+    }
+
+    .pwd-by {
+      color: #312e67;
+      text-align: center;
+    }
+
+    .nav-bg {
+      background-color: #312e67 !important;
+    }
+
+    .nav-heading {
+      font-size: larger;
+      color: #0b5394;
+    }
+
+    .collapse-transparent {
+      background-color: rgb(202 202 213 / 50%);
+    }
+
+    .btn-add-remove {
+      gap: 5%;
+      float: right;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .success-message {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .user-hi {
+      color: #fff;
+      align-items: center;
+      display: flex;
+      margin-right: 1%;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #loaderLogin {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="pos-f-t">
+    <nav class="navbar navbar-dark nav-bg">
+      <div class="d-flex justify-content-end w-100">
+        <span class="user-hi" id="hiUser"></span>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="collapse-transparent p-4">
+        <ul class="navbar-nav">
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="viewHistory">View History</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="settings">Settings</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="help">Help</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link nav-heading" href="#!" id="logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-3" style="text-align: right">
+        <img class="img-fluid img-align" alt="bt-logo" src="../static/logos/512px-BT_logo_2019.png" />
+      </div>
+      <div class="col-md-6">
+        <h2 class="text-sm-start">UTH Automation Dashboard</h2>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="lbl-class" for="callDuration">Call Duration</label>
+          <br />
+          <span id="callDuration"></span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="lbl-class" for="originNumber">Origination Number (M1)</label>
+          <br />
+          <span id="originNumber"></span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group" id="terminationContainer">
+          <label class="lbl-class" for="terminationNumber">Termination Number (M2)</label>
+          <br />
+          <span id="terminationNumber"></span>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-right">
+      <button id="configuration" class="btn btn-bt">Configure</button>
+      <br />
+    </div>
+    <br />
+    <br />
+    <hr />
+    <br />
+
+    <div class="row card-deck">
+      <!-- 5G Card -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-heading">
+            <h5 class="card-title" style="border-left: 20px red">5G</h5>
+          </div>
+          <div class="card-body" id="5g">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="selectAll5g"
+                onclick="toggleAll('5g', this.checked)" />
+              <label class="form-check-label" for="selectAll5g">Select All</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="5gRegistration"
+                onclick="checkSelectAll('5g', 'selectAll5g')" />
+              <label class="form-check-label" for="5gRegistration">
+                5G Registration
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="5gCall"
+                onclick="checkSelectAll('5g', 'selectAll5g')" />
+              <label class="form-check-label" for="5gCall"> EPS Fallback </label>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <!-- VoLTE / IMS Card -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-heading">
+            <h5 class="card-title">VoLTE/IMS</h5>
+          </div>
+          <div class="card-body" id="volteIms">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="selectAllVolteIms"
+                onclick="toggleAll('volteIms', this.checked)" />
+              <label class="form-check-label" for="selectAllVolteIms">Select All</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="volteCallTest"
+                onclick="checkSelectAll('volteIms', 'selectAllVolteIms')" />
+              <label class="form-check-label" for="volteCallTest">
+                VoLTE Call
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="volteSmsTest"
+                onclick="checkSelectAll('volteIms', 'selectAllVolteIms')" />
+              <label class="form-check-label" for="volteSmsTest">
+                PS SMS
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="imsRegistration"
+                onclick="checkSelectAll('volteIms', 'selectAllVolteIms')" />
+              <label class="form-check-label" for="imsRegistration">
+                IMS Registration
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="imsDeRegistration"
+                onclick="checkSelectAll('volteIms', 'selectAllVolteIms')" />
+              <label class="form-check-label" for="imsDeRegistration">
+                IMS De-registration
+              </label>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <!-- Supplimentary Card -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-heading">
+            <h5 class="card-title">Supplementary Services</h5>
+          </div>
+          <div class="card-body" id="supplementary">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="selectAllSupplementary"
+                onclick="toggleAll('supplementary', this.checked)" />
+              <label class="form-check-label" for="selectAllSupplementary">Select All</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="allIncoming"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="allIncoming">
+                All Incoming Calls Barring
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="allOutgoing"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="allOutgoing">
+                All Outgoing Calls Barring
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="voiceMailCFNA"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="voiceMailCFNA">
+                Voice Mail CFNA
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="voiceMailCFB"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="voiceMailCFB">
+                Voice Mail CFB
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="voiceMailCFU"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="voiceMailCFU">
+                Voice Mail CFU
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="holdAndResume"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="holdAndResume">
+                Call Hold and Resume
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="callWaiting"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="callWaiting">
+                Call Waiting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="callBusy"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="callBusy">
+                User Busy
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="fwdNotAnswer"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="fwdNotAnswer">
+                Call Forward User Not Answer
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="fwdBusy"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="fwdBusy">
+                Call Forward User Busy
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="fwdUnconditional"
+                onclick="checkSelectAll('supplementary', 'selectAllSupplementary')" />
+              <label class="form-check-label" for="fwdUnconditional">
+                Call Forward Unconditional
+              </label>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <br />
+    </div>
+    <br />
+    <hr />
+    <br />
+
+    <div id="errorMessage" class="text-center error-message"></div>
+    <br />
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button id="submitBtn" class="btn btn-bt">Submit</button>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div id="loaderLogin" class="hidden">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <footer>
+      <div class="bottom-right">
+        <p class="pwd-by">Powered by</p>
+        <a href="https://uth-uk.com" target="_blank">
+          <img class="img-fluid" src="https://uth-uk.com/Images/img/logo.gif" />
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let terminationCount = 1;
+    let callDuration = "";
+    let originNumber = "";
+    let terminationNumbers = [];
+
+    const toggleAll = (sectionId, isChecked) => {
+      const section = document.getElementById(sectionId);
+      const checkboxes = section.getElementsByTagName("input");
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = isChecked;
+      }
+    };
+
+    const checkSelectAll = (sectionId, selectAllId) => {
+      const section = document.getElementById(sectionId);
+      const checkboxes = section.getElementsByTagName("input");
+      const selectAllCheckbox = document.getElementById(selectAllId);
+
+      for (let i = 1; i < checkboxes.length; i++) {
+        if (!checkboxes[i].checked) {
+          selectAllCheckbox.checked = false;
+          return;
+        }
+      }
+      selectAllCheckbox.checked = true;
+    };
+
+    const addTerminationField = (count, value = "") => {
+      if (count === 1) {
+        terminationCount++;
+        const container = document.getElementById("terminationContainer");
+        const newDiv = document.createElement("div");
+        newDiv.className = "form-group mt-2";
+        newDiv.id = `terminationDiv${terminationCount}`;
+        newDiv.innerHTML = `${value}<br/>`;
+        container.appendChild(newDiv);
+      } else {
+        terminationCount++;
+        const container = document.getElementById("terminationContainer");
+        const newDiv = document.createElement("div");
+        newDiv.className = "form-group mt-2";
+        newDiv.id = `terminationDiv${terminationCount}`;
+        newDiv.innerHTML = `<div><label class="lbl-class" for="terminationNumber${terminationCount}">Termination Number (M${terminationCount})</label></div>${value}<br/>`;
+        container.appendChild(newDiv);
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", async function () {
+      document.getElementById("hiUser").innerText = `${sessionStorage.getItem(
+        "userEmail"
+      )}`;
+
+      //#region  api
+      await fetch("/getDeviceConfig", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data) {
+            callDuration = data.callDuration;
+            originNumber = data.originNumber;
+            terminationNumbers = data.terminationNumbers;
+          } else {
+            document.getElementById("errorMessage").innerText =
+              data?.message ?? "Invalid credentials";
+          }
+        })
+        .catch((error) => {
+          console.error("Error submitting data:", error);
+        })
+        .finally(() => {
+          // Hide loader
+          // loaderLogin.classList.add("hidden");
+        });
+
+      //#endregion
+
+      var callDurationElement = document.getElementById("callDuration");
+      if (!callDuration || callDuration === "" || callDuration === null) {
+        callDurationElement.innerHTML =
+          '<div class="error-message">Call Duration is not configured, please configure it.</div>';
+      } else {
+        callDurationElement.textContent = callDuration;
+      }
+
+      var originNumberElement = document.getElementById("originNumber");
+      if (!originNumber || originNumber === "" || originNumber === null) {
+        originNumberElement.innerHTML =
+          '<div class="error-message">Origination Number is not configured, please configure it.</div>';
+      } else {
+        originNumberElement.textContent = originNumber;
+      }
+
+      var terminationNumber = terminationNumbers;
+      var terminationNumberElement =
+        document.getElementById("terminationNumber");
+      if (
+        !terminationNumber ||
+        terminationNumber.length === 0 ||
+        terminationNumber === null ||
+        terminationNumber === ""
+      ) {
+        terminationNumberElement.innerHTML =
+          '<div class="error-message">Termination Number is not configured, please configure it.</div>';
+      } else {
+        terminationNumbers.forEach((number, index) => {
+          addTerminationField(index + 1, number);
+        });
+      }
+
+      if (!localStorage.getItem("token")) {
+        sessionStorage.removeItem("userEmail");
+        window.location.href = "/";
+      }
+    });
+
+    document.getElementById("logout").addEventListener("click", function () {
+      // Show loader
+      loaderLogin.classList.remove('hidden');
+
+      fetch("http://localhost:3000/remove-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {}
+      }).then(response => {
+        return response.json();
+      }).then(data => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("userEmail");
+      }).catch(error => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("userEmail");
+      }).finally(() => {
+        // Hide loader
+        loaderLogin.classList.add('hidden');
+        window.location.href = '/';
+      });
+    });
+
+    document
+      .getElementById("viewHistory")
+      .addEventListener("click", function () {
+        window.location.href = "/history";
+      });
+
+    document
+      .getElementById("configuration")
+      .addEventListener("click", function () {
+        window.location.href = "/configuration";
+      });
+
+    document
+      .getElementById("settings")
+      .addEventListener("click", function () {
+        window.location.href = "/settings";
+      });
+
+    document.getElementById("help").addEventListener("click", function () {
+      window.location.href = "/help";
+    });
+
+    // Add event listeners to hide error message when any test case is selected
+    document
+      .querySelectorAll(".form-check-input")
+      .forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+          if (checkbox.checked) {
+            document.getElementById("errorMessage").innerText = "";
+          }
+        });
+      });
+
+    document
+      .getElementById("submitBtn")
+      .addEventListener("click", function () {
+        if (
+          !originNumber ||
+          originNumber === "" ||
+          !terminationNumbers ||
+          terminationNumbers.length === 0 ||
+          callDuration === "" ||
+          !callDuration
+        ) {
+          document.getElementById("errorMessage").innerText =
+            "All fields are mandatory!";
+          return;
+        }
+
+        // Check if at least one checkbox is checked
+        const checkboxes = document.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        );
+        if (checkboxes.length === 0) {
+          console.log("check box err");
+          document.getElementById("errorMessage").innerText =
+            "Select at least one of the test-cases to proceed!";
+          return;
+        }
+
+        const checkboxeMessages = [
+          { id: "callWaiting", message: "Call Waiting" },
+          { id: "callBusy", message: "User Busy" },
+          { id: "fwdNotAnswer", message: "Call Forward User Not Answer" },
+          { id: "fwdBusy", message: "Call Forward User Busy" },
+          { id: "fwdUnconditional", message: "Call Forward Unconditional" },
+        ];
+
+        let checkedMessages = [];
+
+        checkboxeMessages.forEach((checkbox) => {
+          if (document.getElementById(checkbox.id).checked) {
+            checkedMessages.push(`${checkbox.message}`);
+          }
+        });
+
+        if (terminationNumbers.length <= 1 && checkedMessages.length > 0) {
+          document.getElementById(
+            "errorMessage"
+          ).innerText = `Please add one more Termination Number as the ${checkedMessages.length === 1 ? "test-case" : "test-cases"
+          } '${checkedMessages.join(", ")}' ${checkedMessages.length === 1 ? "requires" : "require"
+            } at least of 2 Termination devices!`;
+          console.log("After");
+          return;
+        }
+
+        let selectedTests = {
+          origin_number_m1: originNumber,
+          call_duration: callDuration,
+          volte: {
+            call_test: document.getElementById("volteCallTest").checked,
+            sms_test: document.getElementById("volteSmsTest").checked,
+          },
+          callBarring: {
+            all_incoming: document.getElementById("allIncoming").checked,
+            all_outgoing: document.getElementById("allOutgoing").checked,
+          },
+          ims: {
+            registration: document.getElementById("imsRegistration").checked,
+            de_registration:
+              document.getElementById("imsDeRegistration").checked,
+          },
+          voiceMail: {
+            cfna: document.getElementById("voiceMailCFNA").checked,
+            cfb: document.getElementById("voiceMailCFB").checked,
+            cfu: document.getElementById("voiceMailCFU").checked,
+          },
+          call: {
+            hold_and_resume: document.getElementById("holdAndResume").checked,
+            waiting: document.getElementById("callWaiting").checked,
+            busy: document.getElementById("callBusy").checked,
+            fwd_not_ans: document.getElementById("fwdNotAnswer").checked,
+            fwd_busy: document.getElementById("fwdBusy").checked,
+            fwd_unconditional:
+              document.getElementById("fwdUnconditional").checked,
+          },
+          fiveg: {
+            registration: document.getElementById("5gRegistration").checked,
+            call: document.getElementById("5gCall").checked,
+          },
+        };
+
+        terminationNumbers.forEach((number, index) => {
+          selectedTests[`termination_number_m${index + 2}`] = number;
+        });
+        selectedTests[`terminationNumbers`] = terminationNumbers;
+        sessionStorage.setItem(
+          "selectedTests",
+          JSON.stringify(selectedTests)
+        );
+        window.location.href = "/results";
+      });
+  </script>
+</body>
+
+</html>
