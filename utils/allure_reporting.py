@@ -37,7 +37,7 @@ def allure_reporting():
     print("allure_history: " + allure_history)
     shutil.copy(newfile, allure_history)
     try:
-        config_file = os.path.join(os.getcwd(),"_internal\\config\\Config.json")
+        config_file = os.path.join(os.getcwd(),"_internal\\config\\deviceConfig.json")
         allure_report_history = os.path.join(os.getcwd(), "templates\\report-drafts")
         with open(config_file, 'r') as file:
             data = json.load(file)

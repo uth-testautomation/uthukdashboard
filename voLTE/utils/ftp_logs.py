@@ -16,7 +16,7 @@ def ftp_logs():
     print('Logfile name: ' + report_zip_file)
     zipfileloc = os.path.join(report_loc,report_zip_file)
     # json_file_path = os.path.join(os.path.dirname(__file__), 'config', 'Config.json')
-    json_file_path = os.path.join(os.getcwd(), '_internal\\config', 'Config.json')
+    json_file_path = os.path.join(os.getcwd(), '_internal\\config', 'deviceConfig.json')
 
     try:
         with open(json_file_path, 'r') as file:
