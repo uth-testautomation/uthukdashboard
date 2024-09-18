@@ -1,6 +1,6 @@
 Feature: All Outgoing Calls Barring
 
-@4G @BaringOutgoingCall @btdemo
+@4G @BaringOutgoingCall @all
 Scenario Outline:  Outgoing calls are barred for user
 
     Given the user wants to execute "All_outgoing_calls_bared" test case

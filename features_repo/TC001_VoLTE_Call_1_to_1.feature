@@ -1,6 +1,6 @@
 Feature: VoLTE Call
 
-@4G @4G_Call @VoLTECall @btdemo
+@4G @4G_Call @VoLTECall @all
 Scenario Outline:  When user makes a VoLTE Call Test
 
 Given the user wants to execute "IMS_VoLTE_Call" test case

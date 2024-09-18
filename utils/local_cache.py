@@ -6,6 +6,7 @@ desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
 xcal_log_directory = os.path.join(desktop_path, "XCAL_Logs")
 desktopDirectory = xcal_log_directory
 
+
 class Caching:
 
     def __init__(self):
@@ -35,22 +36,25 @@ class Caching:
         self._mtadbprocessid = 0
         self._mfadbfilename = "mfadb_log_file"
         self._mfadbprocessid = 0
-        self._deviceM1 = '07581045780'
-        self._deviceM2 = '07944532088'
-        self._deviceM3 = '07944531930'
+        self._deviceM1 = '00'
+        self._deviceM3 = '00'
+        self._deviceM2 = '00'
         self._numberOfDevice = 1
         self._terminatingNumber2 = "terminalNumber"
         self._terminatingNumber3 = "terminalNumber"
         self._terminatingNumber4 = "terminalNumber"
+        self._modeviceName = ""
+        self._mtdeviceName = ""
+        self._mfdeviceName = ""
 
-        #configFileLocation = os.path.join(os.getcwd(), "config", "Config.json")
-        #with open(configFileLocation, 'r') as configFile:
-        #    configData = json.load(configFile)
-
-        #self._callingNumber = configData['originNumber']
-        #terminating_numbers = configData['terminationNumbers']
-        #for index, terminating_number in enumerate(terminating_numbers):
-        #    self._terminatingNumber2 = terminating_number
+        # configFileLocation = os.path.join(os.getcwd(), "config", "Config.json")
+        # with open(configFileLocation, 'r') as configFile:
+        #     configData = json.load(configFile)
+        #
+        # self._callingNumber = configData['originNumber']
+        # terminating_numbers = configData['terminationNumbers']
+        # for index, terminating_number in enumerate(terminating_numbers):
+        #     self._terminatingNumber2 = terminating_number
 
     def set_testcase(self, testcase: str):
         self._testcase = testcase
@@ -63,7 +67,7 @@ class Caching:
 
     def get_XcalLogs(self):
         return desktopDirectory
-    
+
     def set_noOfDevice(self, noOfDevice: str):
         self._noOfDevice = noOfDevice
 
@@ -89,7 +93,7 @@ class Caching:
 
     def get_mophonenumber(self):
         return self._mophonenumber
-    
+
     def set_mfdeviceid(self, mfdeviceid):
         self._mfdeviceid = mfdeviceid
 
@@ -101,7 +105,7 @@ class Caching:
 
     def get_mfphonenumber(self):
         return self._mfphonenumber
-    
+
     def set_mtdeviceid(self, mtdeviceid):
         self._mtdeviceid = mtdeviceid
 
@@ -119,67 +123,84 @@ class Caching:
 
     def get_networktype(self):
         return self._networkType
-    
+
     def set_xcalfilename(self, xcalfilename):
         self._xcalfilename = xcalfilename
 
     def get_xcalfilename(self):
         return self._xcalfilename
-    
+
     def set_adbfilename(self, adbfilename: str):
         self._adbfilename = adbfilename
 
     def get_adbfilename(self):
         return self._adbfilename
-    
+
     def set_mtadbfilename(self, mtadbfilename: str):
         self._mtadbfilename = mtadbfilename
 
     def get_mtadbfilename(self):
         return self._mtadbfilename
-    
+
     def set_mfadbfilename(self, mfadbfilename: str):
         self._mfadbfilename = mfadbfilename
 
     def get_mfadbfilename(self):
         return self._mfadbfilename
-    
+
     def set_adbprocessid(self, adbprocessid):
         self._adbprocessid = adbprocessid
 
     def get_adbprocessid(self):
         return self._adbprocessid
-    
+
     def set_mtadbprocessid(self, mtadbprocessid):
         self._mtadbprocessid = mtadbprocessid
 
     def get_mtadbprocessid(self):
         return self._mtadbprocessid
-    
+
     def set_mfadbprocessid(self, mfadbprocessid):
         self._mfadbprocessid = mfadbprocessid
 
     def get_mfadbprocessid(self):
         return self._mfadbprocessid
-    
+
     def get_devicem1details(self):
         return self._deviceM1
-    
+
     def get_devicem2details(self):
         return self._deviceM2
 
     def get_devicem3details(self):
         return self._deviceM3
-    
+
     def get_originNumber(self):
         return self._callingNumber
-    
+
     def get_terminating_number2(self):
         return self._terminatingNumber2
-    
+
     def get_terminating_number3(self):
         return self._terminatingNumber3
-    
+
     def get_terminating_number4(self):
         return self._terminatingNumber4
-    
+
+    def set_modevicename(self, modeviceName):
+        self._modeviceName = modeviceName
+
+    def get_modeviceName(self):
+        return self._modeviceName
+
+    def set_mtdevicename(self, mtdeviceName):
+        self._mtdeviceName = mtdeviceName
+
+    def get_mtdeviceName(self):
+        return self._mtdeviceName
+
+    def set_mfdevicename(self, mfdeviceName):
+        self._mfdeviceName = mfdeviceName
+
+    def get_mfdeviceName(self):
+        return self._mfdeviceName

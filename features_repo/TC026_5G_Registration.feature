@@ -1,6 +1,6 @@
 Feature: 5G Registration
 
-  @5G @5GRegistration @Registration @btdemo
+  @5G @5GRegistration @Registration @all
   Scenario Outline: When user makes a 5G Registration Test
     Given the user wants to execute "5G_Registration" test case
     And the user wants to register the device "<subscriber_A>" on "<NetworkType>"

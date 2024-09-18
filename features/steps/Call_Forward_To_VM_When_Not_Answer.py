@@ -33,31 +33,6 @@ def analysing_traces_for_cfna_to_VM(context):
         }
 
         log.analyze_log(context, filename, flag_messages)
-        # Initialize flags
-        # flags = {flag: False for flag in flag_messages}
-        #
-        # with open(filename, 'r', encoding="latin-1") as file:
-        #     lines = file.readlines()
-        #
-        # # Iterate over lines in the log file
-        # for line in lines:
-        #     for flag, message in flag_messages.items():
-        #         if not flags[flag] and message in line:
-        #             flags[flag] = True
-        #             pattern = r"\.\d+\s+\d+\s+\d+\s+I\s+"
-        #             string_cleaned = re.sub(pattern, " ", line)
-        #             with allure.step('Log ' + string_cleaned):
-        #                 pass
-        #             break
-        #
-        # # Check if all flags are set
-        # for flag, flag_set in flags.items():
-        #     if not flag_set:
-        #         with allure.step(flag_messages[flag] + ' not found'):
-        #             assert False, "Test Failed"
-        #
-        # # Set context variables based on flag conditions
-        # context.CFNA_to_Voicemail_Sub_A = flags["Flag_200_OK_Bye"]
 
         with allure.step(".     =====> Log  <========== Subscriber B"):
             pass
@@ -82,32 +57,7 @@ def analysing_traces_for_cfna_to_VM(context):
         }
 
         log.analyze_log(context, filename, flag_messages)
-        # Initialize flags
-        # flags = {flag: False for flag in flag_messages}
-        #
-        # # Process log file
-        # with open(filename, 'r', encoding="latin-1") as file:
-        #     lines = file.readlines()
-        # time.sleep(10)
-        # # Iterate over lines in the log file
-        # for line in lines:
-        #     for flag, message in flag_messages.items():
-        #         if not flags[flag] and message in line:
-        #             flags[flag] = True
-        #             pattern = r"\.\d+\s+\d+\s+\d+\s+I\s+"
-        #             string_cleaned = re.sub(pattern, " ", line)
-        #             with allure.step('Log ' + string_cleaned):
-        #                 pass
-        #             break
-        #
-        # # Check if all flags are set
-        # for flag, flag_set in flags.items():
-        #     if not flag_set:
-        #         with allure.step(flag_messages[flag] + ' not found'):
-        #             assert False, "Test Failed"
-        #
-        # # Set context variable based on flag conditions
-        # context.CFNA_to_Voicemail_Sub_B = flags["Flag_202_Accepted"]
+
 
         with allure.step(".     ==========> ADB-Log Ends here <=========="): pass
 

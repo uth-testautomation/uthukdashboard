@@ -1,6 +1,6 @@
 Feature: User Busy
 
-@4G @callBusy @btdemo
+@4G @callBusy @all
 Scenario Outline:  User gets busy tone when it is calling a subscriber who is on another call
 
     Given the user wants to execute "Call_Busy" test case

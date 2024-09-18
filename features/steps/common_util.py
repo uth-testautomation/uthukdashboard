@@ -1,4 +1,5 @@
 import logging
+import re
 from glob import glob
 
 import allure
@@ -25,54 +26,56 @@ device = function()
 
 def get_XCAL_Filename():
     try:
-        # filename = None
-        # # test_name = "TC014_Call_Forward_Not_Answer_"
-        # numb = {
-        #     caching.get_devicem1details(): 'M1',
-        #     caching.get_devicem2details(): 'M2',
-        #     caching.get_devicem3details(): 'M3'
-        # }
-        # list_of_files = os.listdir(xcal_log_directory)
-        #
-        # for file in list_of_files:
-        #     if (file.startswith(caching.get_testcase())) and (numb[caching.get_mophonenumber()] in file) and (
-        #     file.endswith(".aof")):
-        #         filename = os.path.join(xcal_log_directory, file)
-        #
-        # return filename
+
         filename = None
-        # numb = {
-        #     caching.get_devicem1details():'M1',
-        #     caching.get_devicem2details():'M2',
-        #     caching.get_devicem3details():'M3'
-        # }
         list_of_files = os.listdir(xcal_log_directory)
 
         for file in list_of_files:
             filenam = os.path.join(xcal_log_directory, file)
             with open(filenam, 'r') as files:
                 lines = files.readlines()
-            with allure.step(filenam):
-                pass
             for line in lines:
-                if caching.get_mophonenumber() and str(caching.get_mophonenumber()) in line:
-                    with allure.step("Entered1"):
-                        pass
-                    filename = os.path.join(xcal_log_directory, filenam)
-                    return filename
-                elif caching.get_mfphonenumber() and str(caching.get_mfphonenumber()) in line:
-                    with allure.step("Entered2"):
-                        pass
-                    filename = os.path.join(xcal_log_directory, filenam)
-                    return filename
-                elif caching.get_mtphonenumber() and str(caching.get_mtphonenumber()) in line:
-                    with allure.step("Entered3"):
-                        pass
-                    filename = os.path.join(xcal_log_directory, filenam)
-                    return filename
+                if str(caching.get_mophonenumber()) in line:
+                    deviceName = extracting_filename(filenam)
+                    caching.set_modevicename(deviceName)
+                if str(caching.get_mtphonenumber()) in line:
+                    deviceName = extracting_filename(filenam)
+                    caching.set_mtdevicename(deviceName)
+                if str(caching.get_mfphonenumber()) in line:
+                    deviceName = extracting_filename(filenam)
+                    caching.set_mfdevicename(deviceName)
+
+        filename = None
+        numb = {
+            caching.get_mophonenumber(): caching.get_modeviceName(),
+            caching.get_mtphonenumber(): caching.get_mtdeviceName(),
+            caching.get_mfphonenumber(): caching.get_mfdeviceName()
+        }
+        list_of_files = os.listdir(xcal_log_directory)
+
+        for file in list_of_files:
+            # with allure.step(file):
+            #     pass
+            # with allure.step(numb[caching.get_mophonenumber()]):
+            #     pass
+            if (file.startswith(caching.get_testcase())) and (numb[caching.get_mophonenumber()] in file) and (
+            file.endswith(".aof")):
+                filename = os.path.join(xcal_log_directory, file)
+
+        return filename
 
     except Exception as e:
         print(e)
+
+def extracting_filename(path: str):
+    # directory, filename = os.path.split(path)
+    match = re.search(r'M\d+', path)
+
+    if match:
+        return match.group(0)
+    else:
+        return None
+
 
 @given(u'the user wants to register the device "{MO}" on "{networkType}"')
 def registration_of_device(context, MO: str, networkType: str):
@@ -386,10 +389,3 @@ def xcallogfilename():
 
     except Exception as e:
         print(e)
-
-# def clearingLogfiles():
-#     adbfilename = adblogfilename()
-#     # shutil.
-#     shutil.rmtree(xcal_log_directory)
-
-

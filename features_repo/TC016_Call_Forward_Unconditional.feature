@@ -1,6 +1,6 @@
 Feature: Call Forward Unconditional
 
-@4G @CFU @btdemo
+@4G @CFU @all
 Scenario Outline:  Call forwarding to third party when user enables unconditional forwarding
 
     Given the user wants to execute "Call_Forward_Unconditional" test case

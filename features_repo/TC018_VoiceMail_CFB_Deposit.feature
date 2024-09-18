@@ -1,6 +1,6 @@
 Feature: Voice Mail CFB
 
-@4G @CFBVM @VM @btdemo
+@4G @CFBVM @VM @all
 Scenario Outline:  Call forwarding to Voicemail when user is busy
 
     Given the user wants to execute "Call_Forward_To_VoiceMail_When_Busy" test case

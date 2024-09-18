@@ -1,6 +1,6 @@
 Feature: Call Forward User Not Answer
 
-@4G @CFNA @btdemo
+@4G @CFNA @all
 Scenario Outline:  Call forwarding to third party when user doesn't answer
 
     Given the user wants to execute "Call_Forward_Not_Answered" test case

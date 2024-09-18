@@ -1,6 +1,6 @@
 Feature: Voice Mail CFNA
 
-@4G @VM @CFNAVM @btdemo
+@4G @VM @CFNAVM @all
 Scenario Outline:  Voice mail deposit when user doesnt answer
 
     Given the user wants to execute "Call_Forward_To_VM_When_Not_Answered" test case

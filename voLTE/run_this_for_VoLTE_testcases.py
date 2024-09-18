@@ -41,7 +41,7 @@ if os.path.exists("allure-result"):
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
 try:
-    command = f"behave -v --no-skipped --tags=btdemo -f allure_behave.formatter:AllureFormatter -o allure-result .\\features"
+    command = f"behave -v --no-skipped --tags=all -f allure_behave.formatter:AllureFormatter -o allure-result .\\features"
     print("\nRunning 'behave' command :\n\n", command)
     subprocess.run(command, check=True)
     print("Skipping")

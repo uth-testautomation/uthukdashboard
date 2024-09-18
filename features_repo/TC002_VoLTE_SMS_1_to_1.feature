@@ -1,6 +1,6 @@
 Feature: PS SMS
 
-@4G @SMS @IMS @btdemo
+@4G @SMS @IMS @all
 Scenario Outline:  When user makes a VoLTE SMS Test
 
     Given the user wants to execute "IMS_VoLTE_SMS" test case

@@ -1,6 +1,6 @@
 Feature: IMS De-registration
 
-@volte @4G @IMS @Deregistration @btdemo
+@volte @4G @IMS @Deregistration @all
 Scenario Outline:  When user makes a IMS DeRegistration Test
 
 Given the user wants to execute "4G_IMS_Deregistration" test case

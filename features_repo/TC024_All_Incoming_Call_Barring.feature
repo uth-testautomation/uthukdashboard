@@ -1,6 +1,6 @@
 Feature: All Incoming Calls Barring
 
-@4G @BaringIncomingCall @btdemo
+@4G @BaringIncomingCall @all
 Scenario Outline:  All incoming calls are barred for user
 
     Given the user wants to execute "All_incoming_calls_bared" test case

@@ -1,6 +1,6 @@
 Feature: Voice Mail CFU
 
-@4G @CFUVM @VM @btdemo
+@4G @CFUVM @VM @all
 Scenario Outline:  Call forwarding to Voicemail when user enables unconditional forwarding
 
     Given the user wants to execute "Call_Forward_Unconditional_To_VoiceMail" test case

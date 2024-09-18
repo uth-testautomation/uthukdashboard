@@ -1,6 +1,6 @@
 Feature: Call Forward User Busy
 
-@4G @CFB @btdemo
+@4G @CFB @all
 Scenario Outline:  Call forwarding to third party when user is busy
 
     Given the user wants to execute "Call_Forward_When_Busy" test case

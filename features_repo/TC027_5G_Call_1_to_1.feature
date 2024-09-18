@@ -1,6 +1,6 @@
 Feature: EPS Fallback
 
-@5G @5G_Call @VoNRCall @btdemo
+@5G @5G_Call @VoNRCall @all
 Scenario Outline:  When user makes a 5G VoNR Call Test
 
 Given the user wants to execute "5G_VoNR_Call" test case

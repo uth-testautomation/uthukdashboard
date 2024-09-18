@@ -1,6 +1,6 @@
 Feature: Call Waiting
 
-@4G @callWaiting @btdemo
+@4G @callWaiting @all
 Scenario Outline:  User gets notified about second call, when it is on call
 
     Given the user wants to execute "Call_Waiting" test case
