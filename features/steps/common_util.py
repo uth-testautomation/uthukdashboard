@@ -194,10 +194,18 @@ def call_forward_initiation(context, MO: str, MT: str):
     except Exception as e:
         print(f"Exception: {e}")
 
+@then(u'the user initiates the third party call from "{MO}" to {MT}')
+def call_initiation(context, MO: str, MT: str):
+    try:
+        common_call.initiate_call(caching.get_modeviceid(), MT)
+        time.sleep(6.5)
+        common_call.establish_call(caching.get_mfdeviceid())
+    except Exception as e:
+        print(f"Exception: {e}")
+
 @then(u'user terminates the call from "{MO}" after "{call_duration}" seconds')
 def terminating_the_call(context, MO: str, call_duration):
      # End call
-    time_interval = call_duration
     time.sleep(int(call_duration))
     with allure.step("device name: " + str(MO)): pass
     if (MO == 'subscriber_A'):
@@ -342,11 +350,66 @@ def setting_the_ussd_code(context, status, callFormat, MT, ussd_code):
             print(f'Exception: {e}')
 
 @then(u'the call is not established and gets disconnected after announcement')
-def step_impl(context):
+def call_disconnect_after_announcement(context):
     try:
         time.sleep(3)
     except Exception as e:
         print(f'Exception: {e}')
+
+@then(u'the user "{status}" WiFi calling on "{subscriber}"')
+def wifi_calling_status(context, status, subscriber):
+    try:
+        if (subscriber == 'subscriber_A'):
+            wifi_calling_command = f"adb -s " + caching.get_modeviceid() + " shell \"svc wifi "+ status + "\""
+            process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+            common_call.changeStatusofWifiCalling(caching.get_modeviceid())
+        elif (subscriber == 'subscriber_B'):
+            wifi_calling_command = f"adb -s " + caching.get_mtdeviceid() + " shell \"svc wifi "+ status + "\""
+            process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+            common_call.changeStatusofWifiCalling(caching.get_mtdeviceid())
+        elif (subscriber == 'subscriber_C'):
+            wifi_calling_command = f"adb -s " + caching.get_mfdeviceid() + " shell \"svc wifi "+ status + "\""
+            process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+            common_call.changeStatusofWifiCalling(caching.get_mfdeviceid())
+        # elif (status == 'disable'):
+        #     if (subscriber == 'subscriber_A'):
+        #         wifi_calling_command = f"adb -s " + caching.get_modeviceid() + " shell \"svc wifi disable\""
+        #         process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        #                                    shell=True)
+        #     elif (subscriber == 'subscriber_B'):
+        #         wifi_calling_command = f"adb -s " + caching.get_mtdeviceid() + " shell \"svc wifi disable\""
+        #         process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        #                                    shell=True)
+        #     elif (subscriber == 'subscriber_C'):
+        #         wifi_calling_command = f"adb -s " + caching.get_mfdeviceid() + " shell \"svc wifi disable\""
+        #         process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        #                                    shell=True)
+    except Exception as e:
+        print(e)
+
+@then(u'the user adds the other number to the call')
+def adding_the_other_device(context):
+    time.sleep(10)
+    # subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    # subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    # subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    # subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    # subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    # subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "66"], shell=True)
+    time.sleep(0.2)
+
+@then(u'the user merges the call')
+def merge_the_call(context):
+    subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    time.sleep(0.2)
+    subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    time.sleep(0.2)
+    subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    time.sleep(0.2)
+    subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "61"], shell=True)
+    time.sleep(0.2)
+    subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "66"], shell=True)
+    time.sleep(0.2)
 
 def adblogfilename(device: str):
     try:
@@ -356,7 +419,6 @@ def adblogfilename(device: str):
             adbfile = caching.get_mtadbfilename()
         elif (device == 'subC'):
             adbfile = caching.get_mfadbfilename()
-        print("current path:" + os.getcwd())
 
         list_of_files = os.listdir(os.getcwd())
         # with allure.step(".     =====> Enter  <==========" + list_of_files): pass
