@@ -640,7 +640,7 @@
       // Show loader
       loaderLogin.classList.remove('hidden');
 
-      fetch("http://localhost:3000/remove-token", {
+      fetch("/remove-token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

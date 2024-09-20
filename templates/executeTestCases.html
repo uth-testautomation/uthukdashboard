@@ -390,7 +390,7 @@
                 addTestCase('Supplementary Services', callBarringTestCases);
             }
 
-            fetch("http://localhost:3000/submit", {
+            fetch("/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -436,7 +436,7 @@
 
 
             async function monitorProcess(pid) {
-                const response = await fetch(`http://localhost:3000/monitorProcess/${pid}`);
+                const response = await fetch(`/monitorProcess/${pid}`);
                 const data = await response.json();
 
                 const result = document.getElementById('loadingLabel');
@@ -466,7 +466,7 @@
             }
 
             document.getElementById("stopBtn").addEventListener("click", function () {
-                fetch("http://localhost:3000/stopProcess", {
+                fetch("/stopProcess", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -492,7 +492,7 @@
             // Show loader
             loaderLogin.classList.remove('hidden');
 
-            fetch("http://localhost:3000/remove-token", {
+            fetch("/remove-token", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -571,7 +571,7 @@
 
       async function monitorProcess(pid) {
         const response = await fetch(
-          `http://localhost:3000/monitorProcess/${pid}`
+          `/monitorProcess/${pid}`
         );
         const data = await response.json();
 
@@ -619,7 +619,7 @@
             spinner.style.display = "block";
           });
 
-          fetch("http://localhost:3000/submit", {
+          fetch("/submit", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -645,7 +645,7 @@
           // Show loader
           loaderLogin.classList.remove('hidden');
 
-          fetch("http://localhost:3000/stopProcess", {
+          fetch("/stopProcess", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -683,7 +683,7 @@
       // Show loader
       loaderLogin.classList.remove('hidden');
 
-      fetch("http://localhost:3000/remove-token", {
+      fetch("/remove-token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -325,7 +325,7 @@
                 // else - call userLogin - result token
                 // updateToken API - pass this token
 
-                await fetch("http://localhost:3000/userLogin", {
+                await fetch("/userLogin", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -338,7 +338,7 @@
                     if (data?.Items) {
                         localStorage.setItem('token', data.Items);
 
-                        await fetch("http://localhost:3000/save-token", {
+                        await fetch("/save-token", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
@@ -447,8 +447,8 @@
                 };
 
                 let apiUrl = passwordFormTitle.innerText === 'Create New Password' ?
-                    "http://localhost:3000/createNewPassword" :
-                    "http://localhost:3000/forgotPassword";
+                    "/createNewPassword" :
+                    "/forgotPassword";
 
                 await fetch(apiUrl, {
                     method: "POST",
