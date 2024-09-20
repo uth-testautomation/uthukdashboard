@@ -18,10 +18,3 @@ Scenario Outline:  Voice mail deposit when user doesnt answer
 
     Examples:
     | subscriber_A    |  subscriber_B   | Call_duration |USSD_codes| VoiceMail  |
-#    | 07944531930     |  07581045780    | 10            | 61       |07953222222 |
-
-
-
-    #RFCR81KHXCY-07944531930 - M2
-    #RFCR81KKYTD-07581045780 - M1
-    #RFCR81KL0JT-07944532088 - M3

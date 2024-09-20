@@ -17,4 +17,3 @@ Scenario Outline:  All incoming calls are barred for user
 
     Examples:
     | subscriber_A    |  subscriber_B   | USSD_Code |
-#    | 07944531930     |  07581045780    | 35       |

@@ -14,4 +14,3 @@ Scenario Outline:  When user makes a VoLTE SMS Test
 
     Examples:
     | subscriber_A     |  subscriber_B   |
-#    |    07944532088   |  07581045780    |

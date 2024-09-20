@@ -17,5 +17,4 @@ Scenario Outline:  User gets busy tone when it is calling a subscriber who is on
 
     Examples:
     | subscriber_A    |  subscriber_B   | subscriber_C | Call_duration |
-#    | 07944531930     |  07581045780    |   07944532088 |	10         |
 

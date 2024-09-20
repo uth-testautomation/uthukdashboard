@@ -14,4 +14,3 @@ And check if device has registrated to 4G
 
 Examples:
 | NetworkType | subscriber_A |
-#|          4G |  07944532088 |

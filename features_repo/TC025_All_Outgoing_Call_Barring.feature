@@ -17,8 +17,3 @@ Scenario Outline:  Outgoing calls are barred for user
 
     Examples:
     | subscriber_A    |  subscriber_B   | USSD_Code |
-#    | 07581045780     |  07944531930    | 33        |
-
-    #RFCR81KHXCY-07944531930 - M2
-    #RFCR81KKYTD-07581045780 - M1
-    #RFCR81KL0JT-07944532088 - M3

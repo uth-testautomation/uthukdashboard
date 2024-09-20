@@ -19,4 +19,3 @@ Scenario Outline:  User gets notified about second call, when it is on call
 
     Examples:
     | subscriber_A    |  subscriber_B   | subscriber_C | Call_duration | USSD_codes |
-#    | 07944531930     |  07581045780    | 07944532088  | 10            |43          |

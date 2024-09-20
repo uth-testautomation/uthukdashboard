@@ -19,9 +19,3 @@ Scenario Outline:  Call forwarding to third party when user enables unconditiona
 
     Examples:
     | subscriber_A    |  subscriber_B   | subscriber_C | Call_duration | USSD_codes |
-#    | 07944531930     |  07581045780    |   07944532088| 10            | 21             |
-
-
-    #RFCR81KHXCY-07944531930 - M2
-    #RFCR81KKYTD-07581045780 - M1
-    #RFCR81KL0JT-07944532088 - M3

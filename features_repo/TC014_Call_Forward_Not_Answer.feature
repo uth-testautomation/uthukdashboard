@@ -19,4 +19,3 @@ Scenario Outline:  Call forwarding to third party when user doesn't answer
 
     Examples:
     | subscriber_A    |  subscriber_B   | subscriber_C | Call-duration | USSD_codes |
-#    | 07944531930     |  07581045780    | 07944532088  | 10            |    61      |

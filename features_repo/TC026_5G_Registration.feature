@@ -14,8 +14,3 @@ Feature: 5G Registration
 
     Examples:
       | NetworkType | subscriber_A |
-
-#      |          5G |  07944532088 |
-    #RFCR81KHXCY-07944531930 - M2
-    #RFCR81KKYTD-07581045780 - M1
-    #RFCR81KL0JT-07944532088 - M3

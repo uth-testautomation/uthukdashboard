@@ -18,9 +18,3 @@ Scenario Outline:  Call forwarding to Voicemail when user enables unconditional 
 
     Examples:
     | subscriber_A    |  subscriber_B   | VoiceMail  | Call_duration | USSD_codes |
-#    | 07944531930     |  07581045780   | 07953222222 | 40            | 21         |
-
-
-    #RFCR81KHXCY-07944531930 - M2
-    #RFCR81KKYTD-07581045780 - M1
-    #RFCR81KL0JT-07944532088 - M3
