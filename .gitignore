@@ -1,0 +1,21 @@
+
+*.pyc
+/traces
+/templates/allure-report-history
+/templates/report-drafts
+/templates/allure-report-history
+/voLTE/utils/__pycache__
+/utils/__pycache__
+/allure-result
+/allure-report
+\[Logging Start\] Result.txt
+/allure-report
+/XCAL_Logs
+*.aof
+*.aof
+*.pyc
+/utils/__pycache__
+\[Logging Start\] Result.txt
+/allure-report
+/XCAL_Logs
+/logs
