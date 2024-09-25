@@ -218,6 +218,7 @@ def terminating_the_call(context, MO: str, call_duration):
 
 @then(u'the user wants to sends a sms from "{MO}" to "{MT}"')
 def setting_up_sms(context, MO: str, MT: str):
+    caching.set_noOfDevice('2')
     time.sleep(10)
     moDeviceID, moPhonenumber, mtDeviceID, mtPhonenumber = device.get_device_details(MO, MT)
     caching.set_modeviceid(moDeviceID)
@@ -371,19 +372,6 @@ def wifi_calling_status(context, status, subscriber):
             wifi_calling_command = f"adb -s " + caching.get_mfdeviceid() + " shell \"svc wifi "+ status + "\""
             process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
             common_call.changeStatusofWifiCalling(caching.get_mfdeviceid())
-        # elif (status == 'disable'):
-        #     if (subscriber == 'subscriber_A'):
-        #         wifi_calling_command = f"adb -s " + caching.get_modeviceid() + " shell \"svc wifi disable\""
-        #         process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-        #                                    shell=True)
-        #     elif (subscriber == 'subscriber_B'):
-        #         wifi_calling_command = f"adb -s " + caching.get_mtdeviceid() + " shell \"svc wifi disable\""
-        #         process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-        #                                    shell=True)
-        #     elif (subscriber == 'subscriber_C'):
-        #         wifi_calling_command = f"adb -s " + caching.get_mfdeviceid() + " shell \"svc wifi disable\""
-        #         process = subprocess.Popen(wifi_calling_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-        #                                    shell=True)
     except Exception as e:
         print(e)
 
@@ -410,6 +398,34 @@ def merge_the_call(context):
     time.sleep(0.2)
     subprocess.call(["adb", "-s", caching.get_modeviceid(), "shell", "input", "keyevent", "66"], shell=True)
     time.sleep(0.2)
+
+@then(u'the user sends an SMS containing a picture')
+def sending_sms_containing_picture(context):
+    try:
+        dev_funct.click_homeButton(caching.get_modeviceid())
+        dev_funct.click_homeButton(caching.get_mtdeviceid())
+        time.sleep(0.3)
+        dev_funct.send_a_picture_sms(caching.get_modeviceid(), caching.get_mtphonenumber())
+        time.sleep(2)
+        dev_funct.click_homeButton(caching.get_modeviceid())
+        dev_funct.click_homeButton(caching.get_mtdeviceid())
+    except Exception as e:
+        with allure.step('Failed to send the sms containing photo'):
+            assert False, "Failed to send the sms containing photo"
+
+@then(u'the user sends an SMS attaching a photo from the camera')
+def sending_sms_after_taking_photo(context):
+    try:
+        dev_funct.click_homeButton(caching.get_modeviceid())
+        dev_funct.click_homeButton(caching.get_mtdeviceid())
+        time.sleep(0.3)
+        dev_funct.capture_photo_and_send_as_sms(caching.get_modeviceid(), caching.get_mtphonenumber())
+        time.sleep(2)
+        dev_funct.click_homeButton(caching.get_modeviceid())
+        dev_funct.click_homeButton(caching.get_mtdeviceid())
+    except Exception as e:
+        with allure.step('Failed to send the sms containing photo'):
+            assert False, "Failed to send the sms containing photo"
 
 def adblogfilename(device: str):
     try:

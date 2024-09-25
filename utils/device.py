@@ -49,6 +49,8 @@ class function:
         connected_phone_numbers = []
         for device in devices_mobile_number:
             for adb in abd_device_list:
+                # with allure.step(adb): pass
+                    # assert False, "Test Failed"
                 if adb in device:
                     connected_phone_numbers.append(device.rstrip('\n'))
 
