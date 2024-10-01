@@ -11,7 +11,7 @@ And then stops the XCAL log
 And then stop the adb logs
 Then connects to the network
 Then the user Analyzes the traces for 4G Deregistration
-And check if device is Deregistrated from 4G
+And check if device is Deregistrated from 5G
 
 Examples:
 | NetworkType | subscriber_A |
